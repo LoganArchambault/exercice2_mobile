@@ -8,7 +8,7 @@ public class Damier {
     private final List<Pion> damier = new ArrayList<>();
     public Damier() {}
 
-    public void ajouterPion() {
+    public void ajouterPion(int index, Pion pion) {
 
     }
 }
