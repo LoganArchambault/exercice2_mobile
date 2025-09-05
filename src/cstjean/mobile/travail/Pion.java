@@ -13,7 +13,7 @@ public class Pion {
         couleur = "Blanc";
     }
 
-    public String GetCouleur() {
+    public String getCouleur() {
         return couleur;
     }
 }
