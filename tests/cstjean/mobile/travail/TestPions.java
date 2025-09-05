@@ -20,4 +20,9 @@ public class TestPions extends TestCase{
         assertEquals(couleur, pion2.GetCouleur());
     }
 
+    public void testPions()
+    {
+
+    }
+
 }
