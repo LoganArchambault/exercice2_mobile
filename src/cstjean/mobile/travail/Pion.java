@@ -26,14 +26,11 @@ public class Pion {
         this.couleur = "Blanc";
     }
 
-<<<<<<< HEAD
     /**
      * Retourne la couleur du pion.
      *
      * @return la couleur du pion
      */
-=======
->>>>>>> 983dbca53cd982249f88a99e5d1d899d6552dc15
     public String getCouleur() {
         return couleur;
     }

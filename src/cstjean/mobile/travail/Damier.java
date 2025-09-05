@@ -4,23 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-<<<<<<< HEAD
  * Représente un damier contenant une liste de pions.
- */
-public class Damier {
-
-    /** Liste des pions placés sur le damier. */
-    private final List<Pion> damier;
-
-    /**
-     * Constructeur par défaut.
-     * Initialise une liste vide de pions.
-     */
-    public Damier() {
-        this.damier = new ArrayList<>();
-    }
-=======
- *
  *
  * @author Vincent Szwec-Chevrier
  * @author Logan Archambault Vallee
@@ -28,9 +12,16 @@ public class Damier {
  */
 public class Damier {
 
-    private final List<Pion> pions = new ArrayList<>();
-    public Damier() {}
->>>>>>> 983dbca53cd982249f88a99e5d1d899d6552dc15
+    /** Liste des pions placés sur le damier. */
+    private final List<Pion> pions;
+
+    /**
+     * Constructeur par défaut.
+     * Initialise une liste vide de pions.
+     */
+    public Damier() {
+        this.pions = new ArrayList<>();
+    }
 
     /**
      * Ajoute un pion à une position spécifique du damier.
@@ -40,10 +31,36 @@ public class Damier {
      * @throws IndexOutOfBoundsException si l'index est invalide
      */
     public void ajouterPion(int index, Pion pion) {
-<<<<<<< HEAD
-        damier.add(index, pion);
-=======
         pions.add(index, pion);
->>>>>>> 983dbca53cd982249f88a99e5d1d899d6552dc15
+    }
+
+    /**
+     * Retourne le pion à une position donnée.
+     *
+     * @param index l'index du pion à récupérer
+     * @return le pion à l'index spécifié
+     * @throws IndexOutOfBoundsException si l'index est invalide
+     */
+    public Pion getPion(int index) {
+        return pions.get(index);
+    }
+
+    /**
+     * Supprime le pion à une position donnée.
+     *
+     * @param index l'index du pion à retirer
+     * @throws IndexOutOfBoundsException si l'index est invalide
+     */
+    public void retirerPion(int index) {
+        pions.remove(index);
+    }
+
+    /**
+     * Retourne le nombre de pions sur le damier.
+     *
+     * @return le nombre de pions
+     */
+    public int getNombrePions() {
+        return pions.size();
     }
 }
