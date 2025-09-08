@@ -1,6 +1,5 @@
 package cstjean.mobile.travail;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,47 +11,59 @@ import java.util.List;
  * @author William Lizotte
  */
 public class Damier {
-
     /** Liste des pions placés sur le damier. */
-    private final int nbPositions = 50;
-    private List<Pion> damier = new LinkedList<Pion>();
+    private List<Pion> damier = new LinkedList<>();
 
     /**
      * Constructeur par défaut.
-     * Initialise une liste vide de pions.
+     *
+     *
+     * @param damier Initialise un damier vide.
      */
+
     public Damier(LinkedList<Pion> damier) {
         this.damier = damier;
     }
 
-    public void initializeDamier()
-    {
-        for(int i = 0; i < nbPositions; i++)
-        {
-            damier.add(i, null);
+    /**
+     * initialise le damier avec 50 cases null.
+     */
+    public void initializeDamier() {
+        int nbPositions = 50;
+
+        for (int i = 0; i < nbPositions; i++) {
+            damier.add(null);
         }
     }
+    /**
+     * Remplit le damier avec des pions blancs et noirs selon des règles prédéfinies.*
+     * Cette méthode parcourt la liste `damier` et place des objets `Pion` aux positions spécifiques :
+     * - Les pions blancs ("Blanc") sont placés dans les cases d'index 0 à 19, si la case est vide (`null`).
+     * - Les pions noirs ("Noir") sont placés dans les cases d'index 30 à 49, si la case est vide (`null`).
+     * - Les autres cases ne sont pas modifiées.
+     * Préconditions :
+     * - La liste `damier` doit être initialisée et contenir au moins 50 éléments.
+     * - Chaque élément de la liste peut être `null` ou un objet de type `Pion`.
+     * Postconditions :
+     * - Les cases 0 à 19 contiendront des pions blancs si elles étaient vides.
+     * - Les cases 30 à 49 contiendront des pions noirs si elles étaient vides.
+     * - Les autres cases resteront inchangées.
+     *
+     */
 
-    public void peuplerDamier()
-    {
+    public void peuplerDamier() {
         for (int i = 0; i < damier.size(); i++) {
 
             if (damier.get(i) == null && i <= 19) {
                 Pion pion = new Pion("Blanc");
                 damier.set(i, pion);
-            }
-            else if (damier.get(i) == null && i >= 30 && i <= 49) {
+            } else if (damier.get(i) == null && i >= 30 && i <= 49) {
                 Pion pion = new Pion("Noir");
                 damier.set(i, pion);
-            }
-            else {
+            } else {
                 damier.set(i, null);
             }
         }
-    }
-
-    public List<Pion> getDamier() {
-        return damier;
     }
 
     /**
@@ -63,7 +74,7 @@ public class Damier {
      * @throws IndexOutOfBoundsException si l'index est invalide
      */
     public void ajouterPion(int index, Pion pion) {
-        damier.add(index, pion);
+        damier.set(index, pion);
     }
 
     /**
@@ -93,6 +104,12 @@ public class Damier {
      * @return le nombre de pions
      */
     public int getNbPions() {
-        return damier.size();
+        int i = 0;
+        for (Pion pion : damier) {
+            if (pion != null) {
+                i++;
+            }
+        }
+        return i;
     }
 }

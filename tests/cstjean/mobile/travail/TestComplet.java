@@ -14,8 +14,8 @@ public class TestComplet {
      */
     public static TestSuite suite() {
         TestSuite suite = new TestSuite("TestComplet");
-        suite.addTestSuite(TestDamier.class);
         suite.addTestSuite(TestPions.class);
+        suite.addTestSuite(TestDamier.class);
         return suite;
     }
 }
