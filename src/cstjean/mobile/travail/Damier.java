@@ -14,7 +14,7 @@ import java.util.List;
 public class Damier {
 
     /** Liste des pions placés sur le damier. */
-    private final List<Pion> damier = new LinkedList<Pion>();
+    private List<Pion> damier = new LinkedList<Pion>();
 
     /**
      * Constructeur par défaut.
@@ -22,7 +22,7 @@ public class Damier {
      */
     public Damier(List<Pion> damier) {
 
-        this.damier = new LinkedList<Pion>();
+        this.damier = damier;
     }
 
     public void initializeDamier()
