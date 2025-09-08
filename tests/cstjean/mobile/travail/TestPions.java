@@ -26,10 +26,4 @@ public class TestPions extends TestCase{
         Pion pion2 = new Pion(couleur2);
         assertEquals(couleur2, pion2.getCouleur());
     }
-
-    public void testPions()
-    {
-
-    }
-
 }

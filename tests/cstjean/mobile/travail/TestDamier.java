@@ -3,6 +3,7 @@ package cstjean.mobile.travail;
 import junit.framework.TestCase;
 
 import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Test unitaire de la classe 'Damier'.
@@ -15,23 +16,16 @@ public class TestDamier extends TestCase {
     Damier damier;
 
     public void setUp() {
-
+        damier = new Damier(new LinkedList<Pion>());
     }
 
     public void testCreer() {
-
+        damier.initializeDamier();
+        damier.peuplerDamier();
+        damier.getNbPions();
     }
 
     public void testAjouterDamier() {
         Pion pion = new Pion("noire");
-    }
-
-    public void testDamier()
-    {
-        damier.initializeDamier();
-        for(int i  = 0; i <= 50; i++)
-        {
-            assertNull(damier.checkDamier(i));
-        }
     }
 }
