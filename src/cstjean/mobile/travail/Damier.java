@@ -13,14 +13,16 @@ import java.util.List;
  */
 public class Damier {
 
-<<<<<<< HEAD
-    private List<Pion> damier;
-    public Damier() {
-        this.damier = new LinkedList<Pion>();
-    }
+    /** Liste des pions placés sur le damier. */
+    private final List<Pion> damier = new LinkedList<Pion>();
 
-    public void ajouterPion(int index,Pion pion) {
-        damier.add(index,pion);
+    /**
+     * Constructeur par défaut.
+     * Initialise une liste vide de pions.
+     */
+    public Damier(List<Pion> damier) {
+
+        this.damier = new LinkedList<Pion>();
     }
 
     public void initializeDamier()
@@ -31,62 +33,54 @@ public class Damier {
         }
     }
 
-    public List<Pion> getDamier() {
+        public List<Pion> getDamier() {
+
         return damier;
     }
-    public Pion checkDamier(int index) {
-        return getDamier().get(index);
-=======
-    /** Liste des pions placés sur le damier. */
-    private final List<Pion> pions;
+        public Pion checkDamier(int index) {
 
-    /**
-     * Constructeur par défaut.
-     * Initialise une liste vide de pions.
-     */
-    public Damier() {
-        this.pions = new ArrayList<>();
-    }
+            return getDamier().get(index);
+        }
 
-    /**
-     * Ajoute un pion à une position spécifique du damier.
-     *
-     * @param index l'index où insérer le pion
-     * @param pion le pion à ajouter
-     * @throws IndexOutOfBoundsException si l'index est invalide
-     */
-    public void ajouterPion(int index, Pion pion) {
-        pions.add(index, pion);
-    }
+        /**
+         * Ajoute un pion à une position spécifique du damier.
+         *
+         * @param index l'index où insérer le pion
+         * @param pion le pion à ajouter
+         * @throws IndexOutOfBoundsException si l'index est invalide
+         */
+        public void ajouterPion(int index, Pion pion) {
+            damier.add(index, pion);
+        }
 
-    /**
-     * Retourne le pion à une position donnée.
-     *
-     * @param index l'index du pion à récupérer
-     * @return le pion à l'index spécifié
-     * @throws IndexOutOfBoundsException si l'index est invalide
-     */
-    public Pion getPion(int index) {
-        return pions.get(index);
-    }
+        /**
+         * Supprime le pion à une position donnée.
+         *
+         * @param index l'index du pion à retirer
+         * @throws IndexOutOfBoundsException si l'index est invalide
+         */
+        public void retirerPion(int index) {
+            damier.remove(index);
+        }
 
-    /**
-     * Supprime le pion à une position donnée.
-     *
-     * @param index l'index du pion à retirer
-     * @throws IndexOutOfBoundsException si l'index est invalide
-     */
-    public void retirerPion(int index) {
-        pions.remove(index);
-    }
+        /**
+         * Retourne le pion à une position donnée.
+         *
+         * @param index l'index du pion à récupérer
+         * @return le pion à l'index spécifié
+         * @throws IndexOutOfBoundsException si l'index est invalide
+         */
+        public Pion getPion(int index) {
+            return damier.get(index);
+        }
 
-    /**
-     * Retourne le nombre de pions sur le damier.
-     *
-     * @return le nombre de pions
-     */
-    public int getNombrePions() {
-        return pions.size();
->>>>>>> 72b1f7024a1b38b41af1e096e2d993f1e1b1e7be
-    }
+        /**
+         * Retourne le nombre de pions sur le damier.
+         *
+         * @return le nombre de pions
+         */
+        public int getNombrePions() {
+            return damier.size();
+
+        }
 }
