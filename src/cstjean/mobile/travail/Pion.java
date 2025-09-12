@@ -10,16 +10,21 @@ package cstjean.mobile.travail;
  */
 public class Pion {
 
+    /**
+     * les differentes couleurs de pion possible.
+     */
+    public enum Couleur { Blanc, Noir}
+
     /** La couleur du pion. */
-    private final String couleur;
+    private final Couleur couleurDuPion;
 
     /**
      * Constructeur avec paramètre.
      *
-     * @param couleur la couleur du pion
+     * @param couleurDuPion la couleur du pion
      */
-    public Pion(String couleur) {
-        this.couleur = couleur;
+    public Pion(Couleur couleurDuPion) {
+        this.couleurDuPion = couleurDuPion;
     }
 
     /**
@@ -30,7 +35,7 @@ public class Pion {
      * </p>
      */
     public Pion() {
-        this.couleur = "Blanc";
+        this.couleurDuPion = Couleur.Blanc;
     }
 
     /**
@@ -38,7 +43,7 @@ public class Pion {
      *
      * @return la couleur du pion
      */
-    public String getCouleur() {
-        return couleur;
+    public Couleur getCouleur() {
+        return couleurDuPion;
     }
 }

@@ -67,10 +67,10 @@ public class Damier {
         for (int i = 0; i < damier.size(); i++) {
 
             if (damier.get(i) == null && i <= 19) {
-                Pion pion = new Pion("Blanc");
+                Pion pion = new Pion(Pion.Couleur.Blanc);
                 damier.set(i, pion);
             } else if (damier.get(i) == null && i >= 30 && i <= 49) {
-                Pion pion = new Pion("Noir");
+                Pion pion = new Pion(Pion.Couleur.Noir);
                 damier.set(i, pion);
             } else {
                 damier.set(i, null);
