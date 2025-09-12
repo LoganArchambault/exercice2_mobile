@@ -3,6 +3,10 @@ package cstjean.mobile.travail;
 /**
  * Représente un pion avec une couleur.
  * La couleur est définie à la création du pion ou par défaut à "Blanc".
+ *
+ * @author Vincent Szwec-Chevrier
+ * @author Logan Archambault Vallee
+ * @author William Lizotte
  */
 public class Pion {
 
@@ -20,7 +24,10 @@ public class Pion {
 
     /**
      * Constructeur par défaut.
-     * Initialise la couleur à "Blanc".
+     *
+     * <p>
+     *    Initialise la couleur à "Blanc".
+     * </p>
      */
     public Pion() {
         this.couleur = "Blanc";
