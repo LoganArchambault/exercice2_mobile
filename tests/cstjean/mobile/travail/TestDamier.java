@@ -43,7 +43,14 @@ public class TestDamier extends TestCase {
      * </p>
      */
     public void testCreer() {
-        damier.peuplerDamier();
+        Pion pionBlanc = new Pion(Pion.Couleur.Blanc);
+        damier.ajouterPion(1, pionBlanc);
+        assertEquals(pionBlanc, damier.getPion(1));
+
+        Pion pionNoir = new Pion(Pion.Couleur.Noir);
+        damier.ajouterPion(50, pionNoir);
+        assertEquals(pionNoir, damier.getPion(50));
+
         damier.getNbPions();
     }
 

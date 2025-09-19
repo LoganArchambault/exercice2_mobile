@@ -16,18 +16,10 @@ public class Damier {
 
     /**
      * Constructeur par défaut.
-<<<<<<< HEAD
      */
+    public Damier() {
 
-    public Damier() {}
-=======
-     *
-     * @param damier Initialise un damier vide.
-     */
-    public Damier(LinkedList<Pion> damier) {
-        this.damier = damier;
     }
->>>>>>> 18494ed76259810b856ca79b314feb47b311eadf
 
     /**
      * initialise le damier avec 50 cases null.
