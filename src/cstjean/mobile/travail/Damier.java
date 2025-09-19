@@ -16,9 +16,18 @@ public class Damier {
 
     /**
      * Constructeur par défaut.
+<<<<<<< HEAD
      */
 
     public Damier() {}
+=======
+     *
+     * @param damier Initialise un damier vide.
+     */
+    public Damier(LinkedList<Pion> damier) {
+        this.damier = damier;
+    }
+>>>>>>> 18494ed76259810b856ca79b314feb47b311eadf
 
     /**
      * initialise le damier avec 50 cases null.
@@ -30,30 +39,44 @@ public class Damier {
             damier.add(null);
         }
     }
-    /**
-     * Remplit le damier avec des pions blancs et noirs selon des règles prédéfinies.*
-     * Cette méthode parcourt la liste `damier` et place des objets `Pion` aux positions spécifiques :
-     * - Les pions blancs ("Blanc") sont placés dans les cases d'index 0 à 19, si la case est vide (`null`).
-     * - Les pions noirs ("Noir") sont placés dans les cases d'index 30 à 49, si la case est vide (`null`).
-     * - Les autres cases ne sont pas modifiées.
-     * Préconditions :
-     * - La liste `damier` doit être initialisée et contenir au moins 50 éléments.
-     * - Chaque élément de la liste peut être `null` ou un objet de type `Pion`.
-     * Postconditions :
-     * - Les cases 0 à 19 contiendront des pions blancs si elles étaient vides.
-     * - Les cases 30 à 49 contiendront des pions noirs si elles étaient vides.
-     * - Les autres cases resteront inchangées.
-     *
-     */
 
+    /**
+     * Remplit le damier avec des pions blancs et noirs selon des règles prédéfinies.
+     *
+     * <p>
+     *     Cette méthode parcourt la liste `damier` et place des objets `Pion` aux positions spécifiques :
+     * </p>
+     * <ul>
+     *     <li>Les pions blancs ("Blanc") sont placés dans les cases d'index 0 à 19, si la case est vide (`null`).</li>
+     *     <li>Les pions noirs ("Noir") sont placés dans les cases d'index 30 à 49, si la case est vide (`null`).</li>
+     *     <li>Les autres cases ne sont pas modifiées.</li>
+     * </ul>
+     *
+     * <p>
+     *     Préconditions :
+     * </p>
+     * <ul>
+     *      <li>La liste `damier` doit être initialisée et contenir au moins 50 éléments.</li>
+     *      <li>Chaque élément de la liste peut être `null` ou un objet de type `Pion`.</li>
+     * </ul>
+     *
+     * <p>
+     *      Postconditions :
+     * </p>
+     * <ul>
+     *     <li>Les cases 0 à 19 contiendront des pions blancs si elles étaient vides.</li>
+     *     <li>Les cases 30 à 49 contiendront des pions noirs si elles étaient vides.</li>
+     *     <li>Les autres cases resteront inchangées.</li>
+     * </ul>
+     */
     public void peuplerDamier() {
         for (int i = 0; i < damier.size(); i++) {
 
             if (damier.get(i) == null && i <= 19) {
-                Pion pion = new Pion("Blanc");
+                Pion pion = new Pion(Pion.Couleur.Blanc);
                 damier.set(i, pion);
             } else if (damier.get(i) == null && i >= 30 && i <= 49) {
-                Pion pion = new Pion("Noir");
+                Pion pion = new Pion(Pion.Couleur.Noir);
                 damier.set(i, pion);
             } else {
                 damier.set(i, null);

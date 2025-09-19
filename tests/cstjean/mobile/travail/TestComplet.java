@@ -4,6 +4,10 @@ import junit.framework.TestSuite;
 
 /**
  * Classe utilitaire pour regrouper tous les tests unitaires dans une suite de tests.
+ *
+ * @author Vincent Szwec-Chevrier
+ * @author Logan Archambault Vallee
+ * @author William Lizotte
  */
 public class TestComplet {
 

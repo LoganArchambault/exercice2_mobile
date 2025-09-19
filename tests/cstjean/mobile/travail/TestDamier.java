@@ -24,8 +24,8 @@ public class TestDamier extends TestCase {
      * Initialise le damier avant chaque test.
      *
      * <p>
-     * Cette méthode est appelée automatiquement avant l'exécution de chaque méthode de test.
-     * Elle crée une nouvelle instance de {@code Damier} et appelle {@code initializeDamier()}.
+     *     Cette méthode est appelée automatiquement avant l'exécution de chaque méthode de test.
+     *     Elle crée une nouvelle instance de {@code Damier} et appelle {@code initializeDamier()}.
      * </p>
      */
     @Override
@@ -59,7 +59,7 @@ public class TestDamier extends TestCase {
      * </ul>
      */
     public void testAjouterDamier() {
-        Pion pion = new Pion("noire");
+        Pion pion = new Pion(Pion.Couleur.Noir);
         damier.ajouterPion(38, pion);
         assertEquals(pion, damier.getPion(38));
         assertEquals(1, damier.getNbPions());

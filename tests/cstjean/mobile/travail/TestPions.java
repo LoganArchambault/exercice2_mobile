@@ -25,11 +25,11 @@ public class TestPions extends TestCase {
      * </p>
      */
     public void testCouleur() {
-        Pion pion = new Pion("Blanc");
-        assertEquals("Blanc", pion.getCouleur());
+        Pion pion = new Pion(Pion.Couleur.Blanc);
+        assertEquals(Pion.Couleur.Blanc, pion.getCouleur());
 
-        Pion pion2 = new Pion("Noir");
-        assertEquals("Noir", pion2.getCouleur());
+        Pion pion2 = new Pion(Pion.Couleur.Noir);
+        assertEquals(Pion.Couleur.Noir, pion2.getCouleur());
     }
 
     /**
@@ -41,12 +41,10 @@ public class TestPions extends TestCase {
      * </p>
      */
     public void testCreer() {
-        String couleur1 = "Blanc";
-        Pion pion1 = new Pion(couleur1);
-        assertEquals(couleur1, pion1.getCouleur());
+        Pion pion1 = new Pion(Pion.Couleur.Blanc);
+        assertEquals(Pion.Couleur.Blanc, pion1.getCouleur());
 
-        String couleur2 = "Noir";
-        Pion pion2 = new Pion(couleur2);
-        assertEquals(couleur2, pion2.getCouleur());
+        Pion pion2 = new Pion(Pion.Couleur.Noir);
+        assertEquals(Pion.Couleur.Noir, pion2.getCouleur());
     }
 }

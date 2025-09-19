@@ -3,27 +3,39 @@ package cstjean.mobile.travail;
 /**
  * Représente un pion avec une couleur.
  * La couleur est définie à la création du pion ou par défaut à "Blanc".
+ *
+ * @author Vincent Szwec-Chevrier
+ * @author Logan Archambault Vallee
+ * @author William Lizotte
  */
 public class Pion {
 
+    /**
+     * les differentes couleurs de pion possible.
+     */
+    public enum Couleur { Blanc, Noir}
+
     /** La couleur du pion. */
-    private final String couleur;
+    private final Couleur couleurDuPion;
 
     /**
      * Constructeur avec paramètre.
      *
-     * @param couleur la couleur du pion
+     * @param couleurDuPion la couleur du pion
      */
-    public Pion(String couleur) {
-        this.couleur = couleur;
+    public Pion(Couleur couleurDuPion) {
+        this.couleurDuPion = couleurDuPion;
     }
 
     /**
      * Constructeur par défaut.
-     * Initialise la couleur à "Blanc".
+     *
+     * <p>
+     *    Initialise la couleur à "Blanc".
+     * </p>
      */
     public Pion() {
-        this.couleur = "Blanc";
+        this.couleurDuPion = Couleur.Blanc;
     }
 
     /**
@@ -31,7 +43,7 @@ public class Pion {
      *
      * @return la couleur du pion
      */
-    public String getCouleur() {
-        return couleur;
+    public Couleur getCouleur() {
+        return couleurDuPion;
     }
 }
