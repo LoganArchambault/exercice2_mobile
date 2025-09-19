@@ -16,7 +16,6 @@ public class Damier {
 
     /**
      * Constructeur par défaut.
-<<<<<<< HEAD
      */
 
     public Damier() {}
@@ -61,7 +60,7 @@ public class Damier {
      *     <li>Les autres cases resteront inchangées.</li>
      * </ul>
      */
-    public void peuplerDamier() {
+    /**public void peuplerDamier() {
         for (int i = 0; i < damier.size(); i++) {
 
             if (damier.get(i) == null && i <= 19) {
@@ -74,7 +73,7 @@ public class Damier {
                 damier.set(i, null);
             }
         }
-    }
+    }*/
 
     /**
      * Ajoute un pion à une position spécifique du damier.
@@ -93,9 +92,9 @@ public class Damier {
      * @param index l'index du pion à retirer
      * @throws IndexOutOfBoundsException si l'index est invalide
      */
-    public void retirerPion(int index) {
+    /**public void retirerPion(int index) {
         damier.remove(index - 1);
-    }
+    }*/
 
     /**
      * Retourne le pion à une position donnée.
