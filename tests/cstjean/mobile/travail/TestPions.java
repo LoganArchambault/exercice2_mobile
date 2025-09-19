@@ -41,6 +41,8 @@ public class TestPions extends TestCase {
      * </p>
      */
     public void testCreer() {
+        Pion pion = new Pion();
+        assertEquals(Pion.Couleur.Blanc, pion.getCouleur());
         Pion pion1 = new Pion(Pion.Couleur.Blanc);
         assertEquals(Pion.Couleur.Blanc, pion1.getCouleur());
 
