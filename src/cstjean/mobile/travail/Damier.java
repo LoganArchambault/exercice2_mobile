@@ -15,7 +15,8 @@ public class Damier {
     private List<Pion> damier = new LinkedList<>();
 
     /**
-     * Constructeur par défaut.s
+     * Constructeur par défaut.
+<<<<<<< HEAD
      */
 
     public Damier() {}
@@ -92,9 +93,9 @@ public class Damier {
      * @param index l'index du pion à retirer
      * @throws IndexOutOfBoundsException si l'index est invalide
      */
-    /*public void retirerPion(int index) {
+    public void retirerPion(int index) {
         damier.remove(index - 1);
-    }*/
+    }
 
     /**
      * Retourne le pion à une position donnée.
