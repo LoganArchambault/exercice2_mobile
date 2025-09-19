@@ -17,6 +17,7 @@ public class Damier {
     /**
      * Constructeur par défaut.
      */
+
     public Damier() {
 
     }
