@@ -30,7 +30,7 @@ public class TestDamier extends TestCase {
      */
     @Override
     public void setUp() {
-        damier = new Damier(new LinkedList<>());
+        damier = new Damier();
         damier.initializeDamier();
     }
 

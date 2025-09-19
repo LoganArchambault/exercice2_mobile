@@ -16,14 +16,9 @@ public class Damier {
 
     /**
      * Constructeur par défaut.
-     *
-     *
-     * @param damier Initialise un damier vide.
      */
 
-    public Damier(LinkedList<Pion> damier) {
-        this.damier = damier;
-    }
+    public Damier() {}
 
     /**
      * initialise le damier avec 50 cases null.
@@ -74,7 +69,7 @@ public class Damier {
      * @throws IndexOutOfBoundsException si l'index est invalide
      */
     public void ajouterPion(int index, Pion pion) {
-        damier.set(index, pion);
+        damier.set(index - 1, pion);
     }
 
     /**
@@ -84,7 +79,7 @@ public class Damier {
      * @throws IndexOutOfBoundsException si l'index est invalide
      */
     public void retirerPion(int index) {
-        damier.remove(index);
+        damier.remove(index - 1);
     }
 
     /**
@@ -95,7 +90,7 @@ public class Damier {
      * @throws IndexOutOfBoundsException si l'index est invalide
      */
     public Pion getPion(int index) {
-        return damier.get(index);
+        return damier.get(index - 1);
     }
 
     /**
