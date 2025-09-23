@@ -121,4 +121,31 @@ public class Damier {
         }
         return i;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        int indexDamier = 0;
+
+        for (int ligne = 0; ligne < 10; ligne++) {
+            for (int col = 0; col < 10; col++) {
+                // Vérifie si c'est une case jouable (les cases foncées en damier : ligne + col impaire)
+                if ((ligne + col) % 2 == 1) {
+                    Pion pion = damier.get(indexDamier);
+                    if (pion != null) {
+                        sb.append(pion.getRepresentation());
+                    } else {
+                        sb.append("-");
+                    }
+                    indexDamier++;
+                } else {
+                    sb.append("-");
+                }
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
 }

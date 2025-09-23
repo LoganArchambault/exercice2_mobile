@@ -46,4 +46,13 @@ public class Pion {
     public Couleur getCouleur() {
         return couleurDuPion;
     }
+
+    public String getRepresentation() {
+        if (couleurDuPion == Couleur.Blanc) {
+            return "p";
+        } else if (couleurDuPion == Couleur.Noir) {
+            return "P";
+        }
+        return "-";
+    }
 }

@@ -76,4 +76,33 @@ public class TestDamier extends TestCase {
         assertEquals(pion, damier.getPion(38));
         assertEquals(1, damier.getNbPions());
     }
+
+    public void testAffichageDamierInitial() {
+        Damier damier = new Damier();
+        damier.initializeDamier();
+
+        // Simule le placement des pions comme dans la version commentée de peuplerDamier()
+        for (int i = 0; i < 50; i++) {
+            if (i <= 19) {
+                damier.ajouterPion(i + 1, new Pion(Pion.Couleur.Noir));
+            } else if (i >= 30) {
+                damier.ajouterPion(i + 1, new Pion(Pion.Couleur.Blanc));
+            }
+        }
+
+        String attendu =
+                        "-P-P-P-P-P\n" +
+                        "P-P-P-P-P-\n" +
+                        "-P-P-P-P-P\n" +
+                        "P-P-P-P-P-\n" +
+                        "----------\n" +
+                        "----------\n" +
+                        "-p-p-p-p-p\n" +
+                        "p-p-p-p-p-\n" +
+                        "-p-p-p-p-p\n" +
+                        "p-p-p-p-p-\n";
+
+        assertEquals(attendu, damier.toString());
+    }
 }
+
