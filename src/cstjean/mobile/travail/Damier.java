@@ -1,144 +1,74 @@
 package cstjean.mobile.travail;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Représente un damier contenant une liste de pions.
- *
- * @author Vincent Szwec-Chevrier
- * @author Logan Archambault Vallee
- * @author William Lizotte
+ * Représente un damier contenant des pièces (pions et dames).
  */
 public class Damier {
-    /** Liste des pions placés sur le damier. */
-    private List<Pion> damier = new LinkedList<>();
 
-    /**
-     * Constructeur par défaut.
-     */
+    /** Les cases jouables du damier, numérotées de 1 à 50. */
+    private Map<Integer, Piece> cases = new HashMap<>();
 
+    /** Constructeur par défaut */
     public Damier() {}
 
-    /**
-     * initialise le damier avec 50 cases null.
-     */
-    public void initializeDamier() {
-        int nbPositions = 50;
+    /** Retourne la pièce à une case donnée */
+    public Piece getPiece(int position) {
+        return cases.get(position);
+    }
 
-        for (int i = 0; i < nbPositions; i++) {
-            damier.add(null);
+    /** Ajoute une pièce à une case donnée */
+    public void ajouterPiece(int position, Piece piece) {
+        cases.put(position, piece);
+    }
+
+    /** Supprime la pièce d’une case donnée */
+    public void retirerPiece(int position) {
+        cases.put(position, null);
+    }
+
+    /** Retourne le nombre total de pièces présentes sur le damier */
+    public int getNbPieces() {
+        int count = 0;
+        for (Piece piece : cases.values()) {
+            if (piece != null) count++;
+        }
+        return count;
+    }
+
+    /** Initialise le damier avec 4 rangées de pions noirs et 4 rangées de pions blancs */
+    public void initialiser() {
+        cases.clear();
+
+        // Pions noirs : cases 1 à 20
+        for (int i = 1; i <= 20; i++) {
+            cases.put(i, new Pion(Piece.Couleur.Noir));
+        }
+
+        // Cases vides : 21 à 30
+        for (int i = 21; i <= 30; i++) {
+            cases.put(i, null);
+        }
+
+        // Pions blancs : cases 31 à 50
+        for (int i = 31; i <= 50; i++) {
+            cases.put(i, new Pion(Piece.Couleur.Blanc));
         }
     }
 
-    /**
-     * Remplit le damier avec des pions blancs et noirs selon des règles prédéfinies.
-     *
-     * <p>
-     *     Cette méthode parcourt la liste `damier` et place des objets `Pion` aux positions spécifiques :
-     * </p>
-     * <ul>
-     *     <li>Les pions blancs ("Blanc") sont placés dans les cases d'index 0 à 19, si la case est vide (`null`).</li>
-     *     <li>Les pions noirs ("Noir") sont placés dans les cases d'index 30 à 49, si la case est vide (`null`).</li>
-     *     <li>Les autres cases ne sont pas modifiées.</li>
-     * </ul>
-     *
-     * <p>
-     *     Préconditions :
-     * </p>
-     * <ul>
-     *      <li>La liste `damier` doit être initialisée et contenir au moins 50 éléments.</li>
-     *      <li>Chaque élément de la liste peut être `null` ou un objet de type `Pion`.</li>
-     * </ul>
-     *
-     * <p>
-     *      Postconditions :
-     * </p>
-     * <ul>
-     *     <li>Les cases 0 à 19 contiendront des pions blancs si elles étaient vides.</li>
-     *     <li>Les cases 30 à 49 contiendront des pions noirs si elles étaient vides.</li>
-     *     <li>Les autres cases resteront inchangées.</li>
-     * </ul>
-     */
-    /**public void peuplerDamier() {
-        for (int i = 0; i < damier.size(); i++) {
-
-            if (damier.get(i) == null && i <= 19) {
-                Pion pion = new Pion(Pion.Couleur.Blanc);
-                damier.set(i, pion);
-            } else if (damier.get(i) == null && i >= 30 && i <= 49) {
-                Pion pion = new Pion(Pion.Couleur.Noir);
-                damier.set(i, pion);
-            } else {
-                damier.set(i, null);
-            }
-        }
-    }*/
-
-    /**
-     * Ajoute un pion à une position spécifique du damier.
-     *
-     * @param index l'index où insérer le pion
-     * @param pion le pion à ajouter
-     * @throws IndexOutOfBoundsException si l'index est invalide
-     */
-    public void ajouterPion(int index, Pion pion) {
-        damier.set(index - 1, pion);
-    }
-
-    /**
-     * Supprime le pion à une position donnée.
-     *
-     * @param index l'index du pion à retirer
-     * @throws IndexOutOfBoundsException si l'index est invalide
-     */
-    /**public void retirerPion(int index) {
-        damier.remove(index - 1);
-    }*/
-
-    /**
-     * Retourne le pion à une position donnée.
-     *
-     * @param index l'index du pion à récupérer
-     * @return le pion à l'index spécifié
-     * @throws IndexOutOfBoundsException si l'index est invalide
-     */
-    public Pion getPion(int index) {
-        return damier.get(index - 1);
-    }
-
-    /**
-     * Retourne le nombre de pions sur le damier.
-     *
-     * @return le nombre de pions
-     */
-    public int getNbPions() {
-        int i = 0;
-        for (Pion pion : damier) {
-            if (pion != null) {
-                i++;
-            }
-        }
-        return i;
-    }
-
+    /** Génère une représentation texte du damier (10x10) */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
-        int indexDamier = 0;
+        int caseNum = 1; // de 1 à 50
 
         for (int ligne = 0; ligne < 10; ligne++) {
             for (int col = 0; col < 10; col++) {
-                // Vérifie si c'est une case jouable (les cases foncées en damier : ligne + col impaire)
-                if ((ligne + col) % 2 == 1) {
-                    Pion pion = damier.get(indexDamier);
-                    if (pion != null) {
-                        sb.append(pion.getRepresentation());
-                    } else {
-                        sb.append("-");
-                    }
-                    indexDamier++;
+                if ((ligne + col) % 2 == 1) { // case jouable
+                    Piece piece = cases.get(caseNum++);
+                    sb.append(piece == null ? "-" : piece.getRepresentation());
                 } else {
                     sb.append("-");
                 }
