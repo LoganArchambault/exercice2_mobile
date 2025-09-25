@@ -9,27 +9,43 @@ import java.util.Map;
 public class Damier {
 
     /** Les cases jouables du damier, numérotées de 1 à 50. */
-    private Map<Integer, Piece> cases = new HashMap<>();
+    private final Map<Integer, Piece> cases = new HashMap<>();
 
-    /** Constructeur par défaut */
+    /** Constructeur par défaut. */
     public Damier() {}
 
-    /** Retourne la pièce à une case donnée */
+    /** Retourne la pièce à une case donnée.
+     *
+
+     * @param position positon de la piece.
+     *
+     * @return retourne la piece a la position donner.
+     * */
+
     public Piece getPiece(int position) {
         return cases.get(position);
     }
 
-    /** Ajoute une pièce à une case donnée */
+    /** Ajoute une pièce à une case donnée.
+
+     *  @param position position de la piece a ajouter.
+
+     *  @param piece piece a ajouter.
+
+     * */
     public void ajouterPiece(int position, Piece piece) {
         cases.put(position, piece);
     }
 
-    /** Supprime la pièce d’une case donnée */
+    /** Supprime la pièce d’une case donnée.
+     *
+     * @param position position de la piece a supprimer.
+     * */
     public void retirerPiece(int position) {
         cases.put(position, null);
     }
 
-    /** Retourne le nombre total de pièces présentes sur le damier */
+    /** Retourne le nombre total de pièces présentes sur le damier. */
     public int getNbPieces() {
         int count = 0;
         for (Piece piece : cases.values()) {
@@ -58,7 +74,7 @@ public class Damier {
         }
     }
 
-    /** Génère une représentation texte du damier (10x10) */
+    /** Génère une représentation texte du damier (10x10). */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

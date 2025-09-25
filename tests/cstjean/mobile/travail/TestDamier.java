@@ -7,6 +7,7 @@ import junit.framework.TestCase;
  */
 public class TestDamier extends TestCase {
 
+
     private Damier damier;
 
     @Override

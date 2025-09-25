@@ -7,6 +7,9 @@ import junit.framework.TestCase;
  */
 public class TestDame extends TestCase {
 
+    /**
+     * initialize un damier.
+     */
     private Damier damier;
 
     @Override
@@ -15,7 +18,7 @@ public class TestDame extends TestCase {
         damier.initialiser(); // initialise le damier avec pions
     }
 
-    /** Vérifie la création et la couleur d’une dame */
+    /** Vérifie la création et la couleur d’une dame. */
     public void testCreerDame() {
         Dame dameBlanche = new Dame(Piece.Couleur.Blanc);
         Dame dameNoire = new Dame(Piece.Couleur.Noir);
@@ -27,7 +30,7 @@ public class TestDame extends TestCase {
         assertEquals("D", dameNoire.getRepresentation());
     }
 
-    /** Vérifie que les dames peuvent être placées et récupérées sur le damier */
+    /** Vérifie que les dames peuvent être placées et récupérées sur le damier. */
     public void testAjouterDame() {
         Dame dame = new Dame(Piece.Couleur.Noir);
         damier.ajouterPiece(25, dame);
@@ -36,7 +39,7 @@ public class TestDame extends TestCase {
         assertEquals(41, damier.getNbPieces()); // 40 pions + 1 dame
     }
 
-    /** Vérifie l’affichage complet du damier avec une dame */
+    /** Vérifie l’affichage complet du damier avec une dame. */
     public void testAffichageDamierAvecDame() {
         // Place une dame noire sur la case 10
         Dame dame = new Dame(Piece.Couleur.Noir);

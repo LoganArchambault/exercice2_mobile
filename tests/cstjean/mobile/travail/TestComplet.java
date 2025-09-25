@@ -20,6 +20,7 @@ public class TestComplet {
         TestSuite suite = new TestSuite("TestComplet");
         suite.addTestSuite(TestPions.class);
         suite.addTestSuite(TestDamier.class);
+        suite.addTestSuite(TestDame.class);
         return suite;
     }
 }
