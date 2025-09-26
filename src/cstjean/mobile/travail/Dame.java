@@ -1,9 +1,13 @@
 package cstjean.mobile.travail;
 
 /**
- * Classe représentant une dame (pièce évoluée).
+ * Classe représentant une dame ({@link Pion} évoluée) dans le {@link Damier}.
+ *
+ * @author Vincent Szwec-Chevrier
+ * @author Logan Archambault Vallee
+ * @author William Lizotte
  */
-public class Dame extends Piece {
+public class Dame extends Pion {
 
     /**
      * Constructeur.

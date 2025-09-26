@@ -2,8 +2,22 @@ package cstjean.mobile.travail;
 
 /**
  * Représente un pion classique dans le jeu de dames.
+ *
+ * @author Vincent Szwec-Chevrier
+ * @author Logan Archambault Vallee
+ * @author William Lizotte
  */
-public class Pion extends Piece {
+public class Pion {
+
+    /**
+     * Les deux couleurs possibles pour un pion.
+     */
+    public enum Couleur { Blanc, Noir }
+
+    /**
+     * Couleur du pion.
+     */
+    private final Couleur couleur;
 
     /**
      * Constructeur avec paramètre.
@@ -11,15 +25,16 @@ public class Pion extends Piece {
      * @param couleur la couleur du pion
      */
     public Pion(Couleur couleur) {
-        super(couleur);
+        this.couleur = couleur;
     }
 
     /**
-     * Constructeur par défaut.
-     * Initialise le pion en blanc.
+     * Retourne la couleur du pion.
+     *
+     * @return la couleur du pion
      */
-    public Pion() {
-        super(Couleur.Blanc);
+    public Couleur getCouleur() {
+        return couleur;
     }
 
     /**
@@ -27,7 +42,6 @@ public class Pion extends Piece {
      *
      * @return "p" pour un pion blanc, "P" pour un pion noir, "-" par défaut
      */
-    @Override
     public String getRepresentation() {
         if (getCouleur() == Couleur.Blanc) {
             return "p";

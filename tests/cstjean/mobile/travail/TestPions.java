@@ -17,36 +17,30 @@ import junit.framework.TestCase;
 public class TestPions extends TestCase {
 
     /**
-     * Vérifie que la couleur d'un pion est correctement attribuée et retournée.
-     *
-     * <p>
-     * Crée deux pions avec les couleurs "Blanc" et "Noir", puis vérifie
-     * que la méthode {@code getCouleur()} retourne la couleur attendue.
-     * </p>
-     */
-    public void testCouleur() {
-        Pion pion = new Pion(Pion.Couleur.Blanc);
-        assertEquals(Pion.Couleur.Blanc, pion.getCouleur());
-
-        Pion pion2 = new Pion(Pion.Couleur.Noir);
-        assertEquals(Pion.Couleur.Noir, pion2.getCouleur());
-    }
-
-    /**
      * Vérifie la création d'un pion à partir d'une variable de couleur.
      *
      * <p>
-     * Crée deux pions en utilisant des variables {@code couleur1} et {@code couleur2},
-     * puis vérifie que la couleur retournée correspond à celle passée au constructeur.
+     * Crée deux pions avec les couleurs "Blanc" et "Noir", puis vérifie
+     * que les méthodes {@code getCouleur()} et {@code getRepresentation()} retourne les valeurs attendues.
      * </p>
      */
     public void testCreer() {
-        Pion pion = new Pion();
-        assertEquals(Pion.Couleur.Blanc, pion.getCouleur());
-        Pion pion1 = new Pion(Pion.Couleur.Blanc);
-        assertEquals(Pion.Couleur.Blanc, pion1.getCouleur());
+        Pion pionBlanc = creerPion(Pion.Couleur.Blanc);
+        assertEquals(Pion.Couleur.Blanc, pionBlanc.getCouleur());
+        assertEquals("p", pionBlanc.getRepresentation());
 
-        Pion pion2 = new Pion(Pion.Couleur.Noir);
-        assertEquals(Pion.Couleur.Noir, pion2.getCouleur());
+        Pion pionNoir = creerPion(Pion.Couleur.Noir);
+        assertEquals(Pion.Couleur.Noir, pionNoir.getCouleur());
+        assertEquals("P", pionNoir.getRepresentation());
+    }
+
+    /**
+     * Crée un nouveau pion avec la couleur spécifiée.
+     *
+     * @param couleur La couleur du pion à créer (doit être une valeur de l'énumération Pion.Couleur).
+     * @return Une nouvelle instance de Pion avec la couleur donnée en parametre.
+     */
+    protected Pion creerPion(Pion.Couleur couleur) {
+        return new Pion(couleur);
     }
 }

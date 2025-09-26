@@ -4,63 +4,73 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Représente un damier contenant des pièces (pions et dames).
+ * Représente un damier contenant les pions et dames.
+ *
+ * @author Vincent Szwec-Chevrier
+ * @author Logan Archambault Vallee
+ * @author William Lizotte
  */
 public class Damier {
 
     /** Les cases jouables du damier, numérotées de 1 à 50. */
-    private final Map<Integer, Piece> cases = new HashMap<>();
+    private final Map<Integer, Pion> cases = new HashMap<>();
 
     /** Constructeur par défaut. */
     public Damier() {}
 
-    /** Retourne la pièce à une case donnée.
+    /**
+     * Retourne le pion à une case donnée.
      *
-
      * @param position positon de la piece.
-     *
-     * @return retourne la piece a la position donner.
-     * */
-
-    public Piece getPiece(int position) {
+     * @return le {@link Pion} a la position donner.
+     */
+    public Pion getPion(int position) {
         return cases.get(position);
     }
 
-    /** Ajoute une pièce à une case donnée.
-
+    /**
+     * Ajoute un pion à une case donnée.
+     *
      *  @param position position de la piece a ajouter.
-
-     *  @param piece piece a ajouter.
-
-     * */
-    public void ajouterPiece(int position, Piece piece) {
-        cases.put(position, piece);
+     *  @param pion a ajouter.
+     */
+    public void ajouterPion(int position, Pion pion) {
+        cases.put(position, pion);
     }
 
-    /** Supprime la pièce d’une case donnée.
+    /**
+     * Supprime le {@link Pion} d’une case donnée.
      *
-     * @param position position de la piece a supprimer.
-     * */
-    public void retirerPiece(int position) {
+     * @param position du pion a supprimer.
+     */
+    public void retirerPion(int position) {
         cases.put(position, null);
     }
 
-    /** Retourne le nombre total de pièces présentes sur le damier. */
-    public int getNbPieces() {
+    /**
+     * Retourne le nombre total de pions présentes sur le damier.
+     *
+     * @return valeur integer representant le nombre de pions sur le damier.
+     */
+    public int getNbPions() {
         int count = 0;
-        for (Piece piece : cases.values()) {
-            if (piece != null) count++;
+        for (Pion pion : cases.values()) {
+            if (pion != null) {
+                count++;
+            }
         }
         return count;
     }
 
-    /** Initialise le damier avec 4 rangées de pions noirs et 4 rangées de pions blancs */
+    /**
+     * Initialise le damier avec 4 rangées de 5 pions noirs et 4 rangées de 5 pions blancs.
+     */
     public void initialiser() {
         cases.clear();
 
         // Pions noirs : cases 1 à 20
         for (int i = 1; i <= 20; i++) {
-            cases.put(i, new Pion(Piece.Couleur.Noir));
+            cases.put(i, new Pion(Pion.Couleur.Noir));
         }
 
         // Cases vides : 21 à 30
@@ -70,11 +80,20 @@ public class Damier {
 
         // Pions blancs : cases 31 à 50
         for (int i = 31; i <= 50; i++) {
-            cases.put(i, new Pion(Piece.Couleur.Blanc));
+            cases.put(i, new Pion(Pion.Couleur.Blanc));
         }
     }
 
-    /** Génère une représentation texte du damier (10x10). */
+    /**
+     * Génère une représentation textuelle du damier.
+     *
+     * <p>
+     *  Les cases jouables sont numérotées de 1 à 50 et peuvent êtres vides ou contenir un pion.
+     *  Les cases non jouables sont représentées par '-'.
+     * </p>
+     *
+     * @return Une chaîne de caractères représentant le damier.
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -83,8 +102,8 @@ public class Damier {
         for (int ligne = 0; ligne < 10; ligne++) {
             for (int col = 0; col < 10; col++) {
                 if ((ligne + col) % 2 == 1) { // case jouable
-                    Piece piece = cases.get(caseNum++);
-                    sb.append(piece == null ? "-" : piece.getRepresentation());
+                    Pion pion = cases.get(caseNum++);
+                    sb.append(pion == null ? "-" : pion.getRepresentation());
                 } else {
                     sb.append("-");
                 }
