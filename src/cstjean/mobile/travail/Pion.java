@@ -46,4 +46,3 @@ public class Pion {
         return (couleur == Couleur.Noir) ? "P" : "p";
     }
 }
-.

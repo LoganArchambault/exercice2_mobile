@@ -40,4 +40,3 @@ public class Vue {
         System.out.print(genererAffichage(damier));
     }
 }
-.

@@ -36,5 +36,5 @@ public class Joueur {
         return nom + " (" + couleur + ")";
     }
 }
-.
+
 
