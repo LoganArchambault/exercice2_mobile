@@ -82,16 +82,5 @@ public class Partie {
         damier.initialiser();
         joueurActuel = joueurNoir;
     }
-
-    /**
-     * Affiche le damier et indique quel joueur doit jouer.
-     *
-     * @return une chaîne représentant l’état actuel de la partie.
-     */
-    @Override
-    public String toString() {
-        return "Tour de : " + joueurActuel.getNom() + " (" + joueurActuel.getCouleur() + ")\n"
-                + damier.toString();
-    }
 }
 
