@@ -73,11 +73,6 @@ public class Damier {
             cases.put(i, new Pion(Pion.Couleur.Noir));
         }
 
-        // Cases vides : 21 à 30
-        for (int i = 21; i <= 30; i++) {
-            cases.put(i, null);
-        }
-
         // Pions blancs : cases 31 à 50
         for (int i = 31; i <= 50; i++) {
             cases.put(i, new Pion(Pion.Couleur.Blanc));
@@ -85,32 +80,12 @@ public class Damier {
     }
 
     /**
-     * Génère une représentation textuelle du damier.
+     * Retourne la Map interne (utile pour la Vue).
      *
-     * <p>
-     *  Les cases jouables sont numérotées de 1 à 50 et peuvent êtres vides ou contenir un pion.
-     *  Les cases non jouables sont représentées par '-'.
-     * </p>
-     *
-     * @return Une chaîne de caractères représentant le damier.
+     * @return la Map des cases
      */
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        int caseNum = 1; // de 1 à 50
-
-        for (int ligne = 0; ligne < 10; ligne++) {
-            for (int col = 0; col < 10; col++) {
-                if ((ligne + col) % 2 == 1) { // case jouable
-                    Pion pion = cases.get(caseNum++);
-                    sb.append(pion == null ? "-" : pion.getRepresentation());
-                } else {
-                    sb.append("-");
-                }
-            }
-            sb.append("\n");
-        }
-
-        return sb.toString();
+    public Map<Integer, Pion> getCases() {
+        return cases;
     }
 }
+.

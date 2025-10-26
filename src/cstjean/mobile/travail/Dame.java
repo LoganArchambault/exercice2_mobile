@@ -33,3 +33,4 @@ public class Dame extends Pion {
         return "-";
     }
 }
+.

@@ -43,11 +43,7 @@ public class Pion {
      * @return "p" pour un pion blanc, "P" pour un pion noir, "-" par défaut
      */
     public String getRepresentation() {
-        if (getCouleur() == Couleur.Blanc) {
-            return "p";
-        } else if (getCouleur() == Couleur.Noir) {
-            return "P";
-        }
-        return "-";
+        return (couleur == Couleur.Noir) ? "P" : "p";
     }
 }
+.
