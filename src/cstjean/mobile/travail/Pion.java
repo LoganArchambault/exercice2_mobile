@@ -1,7 +1,7 @@
 package cstjean.mobile.travail;
 
 /**
- * Représente un pion classique dans le jeu de dames.
+ * Classe représentant un pion classique dans le jeu de dames.
  *
  * @author Vincent Szwec-Chevrier
  * @author Logan Archambault Vallee
@@ -10,19 +10,18 @@ package cstjean.mobile.travail;
 public class Pion {
 
     /**
-     * Les deux couleurs possibles pour un pion.
+     * Enumération pour les couleurs possibles.
      */
-    public enum Couleur { Blanc, Noir }
+    public enum Couleur {
+        Blanc, Noir
+    }
 
-    /**
-     * Couleur du pion.
-     */
     private final Couleur couleur;
 
     /**
-     * Constructeur avec paramètre.
+     * Constructeur d'un pion.
      *
-     * @param couleur la couleur du pion
+     * @param couleur Couleur du pion
      */
     public Pion(Couleur couleur) {
         this.couleur = couleur;
@@ -31,18 +30,19 @@ public class Pion {
     /**
      * Retourne la couleur du pion.
      *
-     * @return la couleur du pion
+     * @return Couleur du pion
      */
     public Couleur getCouleur() {
         return couleur;
     }
 
     /**
-     * Retourne la représentation textuelle du pion.
+     * Retourne la représentation graphique du pion.
      *
-     * @return "p" pour un pion blanc, "P" pour un pion noir, "-" par défaut
+     * @return "p" pour blanc, "P" pour noir
      */
     public String getRepresentation() {
         return (couleur == Couleur.Noir) ? "P" : "p";
     }
 }
+

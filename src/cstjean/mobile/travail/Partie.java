@@ -23,9 +23,9 @@ public class Partie {
      * Initialise les joueurs et le damier.
      */
     public Partie() {
-        joueurNoir = new Joueur("Joueur 1", Pion.Couleur.Noir);
-        joueurBlanc = new Joueur("Joueur 2", Pion.Couleur.Blanc);
-        joueurActuel = joueurNoir;
+        joueurBlanc = new Joueur("Joueur 1", Pion.Couleur.Blanc);
+        joueurNoir = new Joueur("Joueur 2", Pion.Couleur.Noir);
+        joueurActuel = joueurBlanc;
 
         damier = new Damier();
         damier.initialiser();
