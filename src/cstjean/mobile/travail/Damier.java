@@ -14,53 +14,35 @@ import java.util.Map;
  */
 public class Damier {
 
-    private final Map<String, Pion> cases = new HashMap<>();
+    private final Map<int[], Pion> cases = new HashMap<>();
 
     /**
      * Initialise le damier avec 20 pions noirs et 20 pions blancs.
      */
     public void initialiser() {
         cases.clear();
-        for (int i = 0; i <= 50; i++) {
-            if(i <= 5) {
-                cases.put("A" + Integer.toString(i), new Pion(Pion.Couleur.Noir));
+        for (int ligne = 0; ligne < 10; ligne++) {
+            for (int col = 0; col < 10; col++) {
+                if ((ligne + col) % 2 == 1) {
+                    int[] pos =  {ligne, col};
+                    if (ligne < 4) {
+                        cases.put(pos, new Pion(Pion.Couleur.Blanc));
+                    } else if (ligne > 5) {
+                        cases.put(pos, new Pion(Pion.Couleur.Noir));
+                    } else {
+                        cases.put(pos, null);
+                    }
+                }
             }
-            else if(i <= 10) {
-                cases.put("B" + Integer.toString(i), new Pion(Pion.Couleur.Noir));
-            }
-            else if(i <= 15 && i > 10) {
-                cases.put("C" + Integer.toString(i), new Pion(Pion.Couleur.Noir));
-            }
-            else if(i <= 20 && i > 15) {
-                cases.put("D" + Integer.toString(i), new Pion(Pion.Couleur.Noir));
-            }
-            else if(i <= 35 && i > 20) {
-                cases.put("E" + Integer.toString(i), new Pion(Pion.Couleur.Blanc));
-            }
-            else if(i <= 40 && i > 35) {
-                cases.put("F" + Integer.toString(i), new Pion(Pion.Couleur.Blanc));
-            }
-            else if(i <= 45  && i > 40) {
-                cases.put("G" + Integer.toString(i), new Pion(Pion.Couleur.Blanc));
-            }
-            else if(i <= 50  && i > 45) {
-                cases.put("H" + Integer.toString(i), new Pion(Pion.Couleur.Blanc));
-            }
-
-        }
-        for (int i = 31; i <= 50; i++) {
-            cases.put(i, new Pion(Pion.Couleur.Blanc));
         }
     }
-
-
     /**
      * Retourne le pion à une position donnée.
      *
      * @param position Position (1 à 50)
      * @return Pion à cette position ou null
      */
-    public Pion getPion(String position) {
+    public Pion getPion(int[] position) {
         return cases.get(position);
     }
 
@@ -70,7 +52,7 @@ public class Damier {
      * @param position Position
      * @param pion     Pion à ajouter
      */
-    public void ajouterPion(String position, Pion pion) {
+    public void ajouterPion(int[] position, Pion pion) {
         cases.put(position, pion);
     }
 
@@ -79,7 +61,7 @@ public class Damier {
      *
      * @param position Position à vider
      */
-    public void retirerPion(String position) {
+    public void retirerPion(int[] position) {
         cases.put(position, null);
     }
 
@@ -120,12 +102,12 @@ public class Damier {
      * @param couleur Couleur
      * @return Liste des positions
      */
-    public List<String> getPositionsAvecCouleur(Pion.Couleur couleur) {
-        List<String> positions = new ArrayList<>();
-        for (Map.Entry<String, Pion> entry : cases.entrySet()) {
+    public List<int[]> getPositionsAvecCouleur(Pion.Couleur couleur) {
+        List<int[]> positions = new ArrayList<>();
+        for (Map.Entry<int[], Pion> entry : cases.entrySet()) {
             Pion pion = entry.getValue();
             if (pion != null && pion.getCouleur() == couleur) {
-                positions.add();
+                positions.add(entry.getKey());
             }
         }
         return positions;
@@ -136,7 +118,7 @@ public class Damier {
      *
      * @return Map des cases
      */
-    public Map<String, Pion> getCases() {
+    public Map<int[], Pion> getCases() {
 
         return cases;
     }

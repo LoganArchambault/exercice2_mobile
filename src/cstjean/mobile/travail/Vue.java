@@ -19,7 +19,7 @@ public class Vue {
         for (int ligne = 0; ligne < 10; ligne++) {
             for (int col = 0; col < 10; col++) {
                 if ((ligne + col) % 2 == 1) { // case jouable
-                    Pion pion = damier.getPion(caseNum++);
+                    Pion pion = damier.getPion(new int[] {ligne, col});
                     sb.append(pion == null ? "-" : pion.getRepresentation());
                 } else {
                     sb.append("-");

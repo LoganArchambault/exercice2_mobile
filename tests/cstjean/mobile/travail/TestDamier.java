@@ -1,5 +1,4 @@
 package cstjean.mobile.travail;
-
 import junit.framework.TestCase;
 
 /**
@@ -38,15 +37,15 @@ public class TestDamier extends TestCase {
         assertEquals(Pion.Couleur.Noir, pionNoir.getCouleur());
 
         // Vérifie les pions ajoutées sur le damier
-        damier.ajouterPion(1, pionNoir);
-        assertEquals(pionNoir, damier.getPion(1));
+        damier.ajouterPion(new int[]{1, 2},pionNoir);
+        assertEquals(pionNoir, damier.getPion(new int[]{1, 2}));
 
-        damier.ajouterPion(50, pionBlanc);
-        assertEquals(pionBlanc, damier.getPion(50));
+        damier.ajouterPion(new int[]{9,8}, pionBlanc);
+        assertEquals(pionBlanc, damier.getPion(new int[]{9, 8}));
 
         // Case vide
-        damier.retirerPion(25);
-        assertNull(damier.getPion(25));
+        damier.retirerPion(new int[]{1,2});
+        assertNull(damier.getPion(new int[]{1,2}));
     }
 
     /**
@@ -58,7 +57,7 @@ public class TestDamier extends TestCase {
 
         // Ajout d’une pièce supplémentaire
         Pion pion = new Pion(Pion.Couleur.Noir);
-        damier.ajouterPion(25, pion);
+        damier.ajouterPion(new int[] {1,2}, pion);
         assertEquals(41, damier.getNbPions());
     }
 
@@ -73,8 +72,8 @@ public class TestDamier extends TestCase {
 
         Dame dameBlanc = new Dame(blanc);
 
-        damier.ajouterPion(26, dameBlanc);
-        assertEquals(dameBlanc, damier.getPion(26));
+        damier.ajouterPion(new int[]{1,2}, dameBlanc);
+        assertEquals(dameBlanc, damier.getPion(new int[]{1,2}));
         assertEquals(41, damier.getNbPions()); // 41 pions + 1 dame
     }
 
@@ -106,8 +105,8 @@ public class TestDamier extends TestCase {
         Dame dameBlanc = new Dame(Pion.Couleur.Blanc);
         Dame dameNoir = new Dame(Pion.Couleur.Noir);
 
-        damier.ajouterPion(26, dameBlanc);
-        damier.ajouterPion(27, dameNoir);
+        damier.ajouterPion(new int[] {1,2}, dameBlanc);
+        damier.ajouterPion(new int[] {1,6}, dameNoir);
 
         String affichage = damier.toString();
 
