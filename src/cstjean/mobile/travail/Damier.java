@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class Damier {
 
-    private final Map<int[], Pion> cases = new HashMap<>();
+    private final Map<Coordonner, Pion> cases = new HashMap<>();
 
     /**
      * Initialise le damier avec 20 pions noirs et 20 pions blancs.
@@ -24,7 +24,7 @@ public class Damier {
         for (int ligne = 0; ligne < 10; ligne++) {
             for (int col = 0; col < 10; col++) {
                 if ((ligne + col) % 2 == 1) {
-                    int[] pos =  {ligne, col};
+                    Coordonner pos = new Coordonner(ligne, col);
                     if (ligne < 4) {
                         cases.put(pos, new Pion(Pion.Couleur.Blanc));
                     } else if (ligne > 5) {
@@ -39,11 +39,11 @@ public class Damier {
     /**
      * Retourne le pion à une position donnée.
      *
-     * @param position Position (1 à 50)
+     * @param coordonner Position (1 à 50)
      * @return Pion à cette position ou null
      */
-    public Pion getPion(int[] position) {
-        return cases.get(position);
+    public Pion getPion(Coordonner coordonner) {
+        return cases.get(coordonner);
     }
 
     /**
@@ -52,8 +52,8 @@ public class Damier {
      * @param position Position
      * @param pion     Pion à ajouter
      */
-    public void ajouterPion(int[] position, Pion pion) {
-        cases.put(position, pion);
+    public void ajouterPion(Coordonner coordonner, Pion pion) {
+        cases.put(coordonner, pion);
     }
 
     /**
@@ -61,8 +61,8 @@ public class Damier {
      *
      * @param position Position à vider
      */
-    public void retirerPion(int[] position) {
-        cases.put(position, null);
+    public void retirerPion(Coordonner coordonner) {
+        cases.put(coordonner, null);
     }
 
     /**
@@ -102,9 +102,9 @@ public class Damier {
      * @param couleur Couleur
      * @return Liste des positions
      */
-    public List<int[]> getPositionsAvecCouleur(Pion.Couleur couleur) {
-        List<int[]> positions = new ArrayList<>();
-        for (Map.Entry<int[], Pion> entry : cases.entrySet()) {
+    public List<Coordonner> getPositionsAvecCouleur(Pion.Couleur couleur) {
+        List<Coordonner> positions = new ArrayList<>();
+        for (Map.Entry<Coordonner, Pion> entry : cases.entrySet()) {
             Pion pion = entry.getValue();
             if (pion != null && pion.getCouleur() == couleur) {
                 positions.add(entry.getKey());
@@ -118,7 +118,7 @@ public class Damier {
      *
      * @return Map des cases
      */
-    public Map<int[], Pion> getCases() {
+    public Map<Coordonner, Pion> getCases() {
 
         return cases;
     }
