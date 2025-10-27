@@ -18,6 +18,11 @@ public class Pion {
 
     private final Couleur couleur;
 
+    private int[] position;
+
+    private Boolean deplacable;
+
+
     /**
      * Constructeur d'un pion.
      *
@@ -34,6 +39,22 @@ public class Pion {
      */
     public Couleur getCouleur() {
         return couleur;
+    }
+
+    public Boolean getDeplacable() {
+        return deplacable;
+    }
+
+    public void setDeplacable(Boolean deplacable) {
+        this.deplacable = deplacable;
+    }
+
+    public int[] getPosition() {
+        return position;
+    }
+
+    public void setPosition(int[] position) {
+        this.position = position;
     }
 
     /**

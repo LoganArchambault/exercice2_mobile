@@ -49,8 +49,8 @@ public class Damier {
     /**
      * Ajoute un pion à une position.
      *
-     * @param position Position
-     * @param pion     Pion à ajouter
+     * @param coordonner Coordonner du pion
+     * @param pion Pion à ajouter
      */
     public void ajouterPion(Coordonner coordonner, Pion pion) {
         cases.put(coordonner, pion);
@@ -59,7 +59,7 @@ public class Damier {
     /**
      * Retire le pion d'une position.
      *
-     * @param position Position à vider
+     * @param coordonner Coordonner à vider
      */
     public void retirerPion(Coordonner coordonner) {
         cases.put(coordonner, null);
@@ -74,6 +74,66 @@ public class Damier {
         int count = 0;
         for (Pion pion : cases.values()) {
             if (pion != null) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Retourne le nombre total de pions noir sur le damier.
+     *
+     * @return Nombre de pions
+     */
+    public int getNbPionsNoir() {
+        int count = 0;
+        for (Pion pion : cases.values()) {
+            if (pion != null && pion.getCouleur() == Pion.Couleur.Noir) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Retourne le nombre total de pions noir sur le damier.
+     *
+     * @return Nombre de pions
+     */
+    public int getNbPionsBlanc() {
+        int count = 0;
+        for (Pion pion : cases.values()) {
+            if (pion != null && pion.getCouleur() == Pion.Couleur.Blanc) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Retourne le nombre total de pions noir sur le damier.
+     *
+     * @return Nombre de pions
+     */
+    public int getNbImmobilesNoir() {
+        int count = 0;
+        for (Pion pion : cases.values()) {
+            if (pion != null && pion.getCouleur() == Pion.Couleur.Noir && !pion.getDeplacable()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Retourne le nombre total de pions noir sur le damier.
+     *
+     * @return Nombre de pions
+     */
+    public int getNbImmobilesBlanc() {
+        int count = 0;
+        for (Pion pion : cases.values()) {
+            if (pion != null && pion.getCouleur() == Pion.Couleur.Blanc && !pion.getDeplacable()) {
                 count++;
             }
         }
@@ -104,8 +164,10 @@ public class Damier {
      */
     public List<Coordonner> getPositionsAvecCouleur(Pion.Couleur couleur) {
         List<Coordonner> positions = new ArrayList<>();
+
         for (Map.Entry<Coordonner, Pion> entry : cases.entrySet()) {
             Pion pion = entry.getValue();
+
             if (pion != null && pion.getCouleur() == couleur) {
                 positions.add(entry.getKey());
             }
@@ -119,7 +181,6 @@ public class Damier {
      * @return Map des cases
      */
     public Map<Coordonner, Pion> getCases() {
-
         return cases;
     }
 }

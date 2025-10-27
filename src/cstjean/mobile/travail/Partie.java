@@ -25,8 +25,11 @@ public class Partie {
     public Partie() {
         joueurBlanc = new Joueur("Joueur 1", Pion.Couleur.Blanc);
         joueurNoir = new Joueur("Joueur 2", Pion.Couleur.Noir);
-        joueurActuel = joueurBlanc;
+        initPartie();
+    }
 
+    public void initPartie() {
+        joueurActuel = joueurBlanc;
         damier = new Damier();
         damier.initialiser();
     }
@@ -50,13 +53,6 @@ public class Partie {
     }
 
     /**
-     * Change le joueur actif (passe au tour de l’autre joueur).
-     */
-    public void changerJoueur() {
-        joueurActuel = (joueurActuel == joueurNoir) ? joueurBlanc : joueurNoir;
-    }
-
-    /**
      * Retourne le joueur noir.
      *
      * @return le joueur noir
@@ -64,6 +60,23 @@ public class Partie {
     public Joueur getJoueurNoir() {
         return joueurNoir;
     }
+
+    /**
+     * Retourne le joueur blanc.
+     *
+     * @return le joueur blanc
+     */
+    public Joueur getJoueurBlanc() {
+        return joueurBlanc;
+    }
+
+    /**
+     * Change le joueur actif (passe au tour de l’autre joueur).
+     */
+    public void changerJoueur() {
+        joueurActuel = (joueurActuel == joueurNoir) ? joueurBlanc : joueurNoir;
+    }
+
     /**
      * Decide si un pion peut bouger en fonctions de si : il y as une piece sur la case destination, une piece sur la case actuelle.
      * @param p pions a deplacer.
@@ -71,16 +84,17 @@ public class Partie {
      * @param positionActuelle postion du pion.
      * @return si oui ou non il peut etre deplacer.
      */
-
     public Boolean DroitDeplacement(Pion p, Coordonner destination, Coordonner positionActuelle) {
         if (damier.getPion(destination) == null &&  damier.getPion(positionActuelle) != null) {
                 if (p.getCouleur() == Pion.Couleur.Noir) {
+
                     if (!(damier.getPion(positionActuelle) instanceof Dame)) {
                         return positionActuelle.getX() + 1 == destination.getX() && positionActuelle.getY() - 1 == destination.getY() || positionActuelle.getX() + 1 == destination.getX() && positionActuelle.getY() + 1 == destination.getY();
                     }
                     else{
                         int XonSenvaOu = destination.getX() - positionActuelle.getX();
                         int YonSenvaOu = destination.getY() -  positionActuelle.getY();
+
                         if(XonSenvaOu >= 0 && YonSenvaOu >= 0){
                             for (int i = 0; i < XonSenvaOu; i++) {
                                 for (int j = 0; j < YonSenvaOu; j++) {
@@ -88,6 +102,7 @@ public class Partie {
                                 }
                             }
                         }
+
                         if(Pion.Couleur.Blanc == p.getCouleur()) {
                             for (int i = positionActuelle.getX(); i < 10; i++) {
                                 for (int j = positionActuelle.getY(); j < 10; j++) {
@@ -108,6 +123,7 @@ public class Partie {
         }
         return false;
     }
+
     /**
      *Change la position du pion lors d'un deplacement.
      *
@@ -116,7 +132,6 @@ public class Partie {
      * @param   positionActuelle la postition actuelle du pion a deplacer.
      * @return retourne un Boolean pour facilite la gestion d'erreur de la vue avec android studio.
      */
-
     public Boolean actionDeplacement(Pion p, Coordonner destination, Coordonner positionActuelle) {
         if (DroitDeplacement(p, destination, positionActuelle)) {
             damier.getCases().put(destination, damier.getPion(positionActuelle));
@@ -125,6 +140,7 @@ public class Partie {
         }
         return false;
     }
+
     /**
      * Decide si oui ou non la capture peut arriver.
      * @param p le pions qui attaque.
@@ -132,9 +148,10 @@ public class Partie {
      * @param positionActuelle la position du pion qui attaque.
      * @return si oui ou non la capture peut arriver.
      */
-
     public Boolean DroitDeCapture(Pion p, Coordonner destination, Coordonner positionActuelle) {
+
         Coordonner milieu = new Coordonner(destination.getX() - positionActuelle.getY(),destination.getY() - positionActuelle.getX());
+
         if (damier.getPion(destination) == null && damier.getPion(positionActuelle) != null && damier.getPion(milieu) != null) {
             return p.getCouleur() != damier.getPion(milieu).getCouleur();
         }
@@ -150,14 +167,24 @@ public class Partie {
         }
         return false;
     }
-    /**
-     * Retourne le joueur blanc.
-     *
-     * @return le joueur blanc
-     */
 
-    public Joueur getJoueurBlanc() {
-        return joueurBlanc;
+    public Boolean checkFinPartie() {
+        int pionsNoir = damier.getNbPionsNoir();
+        int pionsBlanc = damier.getNbPionsBlanc();
+
+        int immobilesNoir = damier.getNbImmobilesNoir();
+        int immobilesBlanc = damier.getNbImmobilesBlanc();
+
+        if (pionsNoir == 0 || pionsNoir == immobilesNoir) {
+            System.console().printf("Victoire Joueur Blanc");
+            return true;
+        } else if (pionsBlanc == 0 || pionsBlanc == immobilesBlanc) {
+            System.console().printf("Victoire Joueur Noir");
+            return true;
+        } else {
+            System.console().printf("Next turn");
+            return false;
+        }
     }
 
     /**
