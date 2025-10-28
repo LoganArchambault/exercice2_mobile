@@ -1,8 +1,15 @@
 package cstjean.mobile.travail;
 
 /**
- * Classe Vue — responsable uniquement de l'affichage du damier et des pions.
- * Principe de responsabilité unique (SRP).
+ * Classe {@code Vue} — responsable uniquement de l'affichage du damier et des pions.
+ * 
+ * <p>
+ *     Respecte le principe de responsabilité unique (SRP).
+ * </p>
+ *
+ * @author Vincent Szwec-Chevrier
+ * @author Logan Archambault Vallee
+ * @author William Lizotte
  */
 public class Vue {
 

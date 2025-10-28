@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Classe représentant le damier de 50 cases jouables.
+ * Classe représentant le damier du jeu de dames (10x10).
+ * Contient la position de chaque pion sur le plateau.
  *
  * @author Vincent Szwec-Chevrier
  * @author Logan Archambault Vallee
@@ -14,14 +15,13 @@ import java.util.Map;
  */
 public class Damier {
 
+    /** Map contenant les cases du damier et leur pion associé. */
     private final Map<Coordonner, Pion> cases = new HashMap<>();
 
     /**
      * Initialise le damier avec 20 pions noirs et 20 pions blancs.
      *
-     * <p>
-     *     x = colonnes et y = ligne
-     * <p/>
+     * <p>x = colonnes et y = lignes.</p>
      */
     public void initialiser() {
         cases.clear();
@@ -40,30 +40,40 @@ public class Damier {
             }
         }
     }
+
+    /**
+     * Retourne la Map interne représentant les cases du damier.
+     *
+     * @return la Map des cases
+     */
+    public Map<Coordonner, Pion> getCases() {
+        return cases;
+    }
+
     /**
      * Retourne le pion à une position donnée.
      *
-     * @param coordonner Position (1 à 50)
-     * @return Pion à cette position ou null
+     * @param coordonner la coordonnée à vérifier
+     * @return le pion à cette position ou null s'il n'y en a pas
      */
     public Pion getPion(Coordonner coordonner) {
         return cases.get(coordonner);
     }
 
     /**
-     * Ajoute un pion à une position.
+     * Ajoute un pion à une position donnée.
      *
-     * @param coordonner Coordonner du pion
-     * @param pion Pion à ajouter
+     * @param coordonner la coordonnée du pion
+     * @param pion le pion à ajouter
      */
     public void ajouterPion(Coordonner coordonner, Pion pion) {
         cases.put(coordonner, pion);
     }
 
     /**
-     * Retire le pion d'une position.
+     * Retire le pion d'une position donnée.
      *
-     * @param coordonner Coordonner à vider
+     * @param coordonner la coordonnée à vider
      */
     public void retirerPion(Coordonner coordonner) {
         cases.put(coordonner, null);
@@ -72,7 +82,7 @@ public class Damier {
     /**
      * Retourne le nombre total de pions sur le damier.
      *
-     * @return Nombre de pions
+     * @return le nombre de pions
      */
     public int getNbPions() {
         int count = 0;
@@ -85,9 +95,9 @@ public class Damier {
     }
 
     /**
-     * Retourne le nombre total de pions noir sur le damier.
+     * Retourne le nombre de pions noirs sur le damier.
      *
-     * @return Nombre de pions
+     * @return le nombre de pions noirs
      */
     public int getNbPionsNoir() {
         int count = 0;
@@ -100,9 +110,9 @@ public class Damier {
     }
 
     /**
-     * Retourne le nombre total de pions noir sur le damier.
+     * Retourne le nombre de pions blancs sur le damier.
      *
-     * @return Nombre de pions
+     * @return le nombre de pions blancs
      */
     public int getNbPionsBlanc() {
         int count = 0;
@@ -115,9 +125,9 @@ public class Damier {
     }
 
     /**
-     * Retourne le nombre total de pions noir sur le damier.
+     * Retourne le nombre de pions noirs immobiles sur le damier.
      *
-     * @return Nombre de pions
+     * @return le nombre de pions noirs immobiles
      */
     public int getNbImmobilesNoir() {
         int count = 0;
@@ -130,9 +140,9 @@ public class Damier {
     }
 
     /**
-     * Retourne le nombre total de pions noir sur le damier.
+     * Retourne le nombre de pions blancs immobiles sur le damier.
      *
-     * @return Nombre de pions
+     * @return le nombre de pions blancs immobiles
      */
     public int getNbImmobilesBlanc() {
         int count = 0;
@@ -145,47 +155,22 @@ public class Damier {
     }
 
     /**
-     * Retourne le nombre de pions d'une couleur.
+     * Retourne toutes les positions occupées par des pions d'une couleur donnée.
      *
-     * @param couleur Couleur
-     * @return Nombre de pions
-     */
-    public int getNbPions(Pion.Couleur couleur) {
-        int count = 0;
-        for (Pion pion : cases.values()) {
-            if (pion != null && pion.getCouleur() == couleur) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    /**
-     * Retourne toutes les positions occupées par des pions d'une couleur.
-     *
-     * @param couleur Couleur
-     * @return Liste des positions
+     * @param couleur la couleur des pions à rechercher
+     * @return une liste des positions contenant des pions de cette couleur
      */
     public List<Coordonner> getPositionsAvecCouleur(Pion.Couleur couleur) {
         List<Coordonner> positions = new ArrayList<>();
 
         for (Map.Entry<Coordonner, Pion> entry : cases.entrySet()) {
             Pion pion = entry.getValue();
-
             if (pion != null && pion.getCouleur() == couleur) {
                 positions.add(entry.getKey());
             }
         }
-        return positions;
-    }
 
-    /**
-     * Retourne la Map interne (utile pour la Vue).
-     *
-     * @return Map des cases
-     */
-    public Map<Coordonner, Pion> getCases() {
-        return cases;
+        return positions;
     }
 }
 

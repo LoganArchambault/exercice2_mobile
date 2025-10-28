@@ -1,8 +1,12 @@
 package cstjean.mobile.travail;
 
 /**
- * Classe représentant une partie de jeu de dames.
- * Gère les deux joueurs, le damier, et le tour en cours.
+ * Classe représentant une partie de jeu de dames internationales.
+ * Gère les joueurs, le damier et la logique de tour.
+ *
+ * @author Vincent Szwec-Chevrier
+ * @author Logan Archambault Vallee
+ * @author William Lizotte
  */
 public class Partie {
 
@@ -29,6 +33,7 @@ public class Partie {
         initPartie();
     }
 
+    /** Initialise la partie avec le joueur blanc et un damier vierge. */
     public void initPartie() {
         joueurActuel = joueurBlanc;
         damier.initialiser();
@@ -52,61 +57,41 @@ public class Partie {
         return joueurActuel;
     }
 
-    /**
-     * Retourne le joueur noir.
-     *
-     * @return le joueur noir
-     */
-    public Joueur getJoueurNoir() {
-        return joueurNoir;
-    }
-
-    /**
-     * Retourne le joueur blanc.
-     *
-     * @return le joueur blanc
-     */
-    public Joueur getJoueurBlanc() {
-        return joueurBlanc;
-    }
-
-    /**
-     * Change le joueur actif (passe au tour de l’autre joueur).
-     */
+    /** Change le joueur actif (passe au tour de l’autre joueur). */
     public void changerJoueur() {
         joueurActuel = (joueurActuel == joueurNoir) ? joueurBlanc : joueurNoir;
     }
 
     /**
-     * Decide si un pion peut bouger en fonctions de si : il y as une piece sur la case destination, une piece sur la case actuelle.
-     * @param p pions a deplacer.
-     * @param destination potientiel destination du pion.
-     * @param positionActuelle postion du pion.
-     * @return si oui ou non il peut etre deplacer.
+     * Vérifie si un déplacement simple est autorisé.
+     *
+     * @param pion le pion à déplacer
+     * @param destination la case de destination
+     * @param positionActuelle la position actuelle du pion
+     * @return true si le déplacement est permis, false sinon
      */
-    public boolean DroitDeplacement(Pion p, Coordonner destination, Coordonner positionActuelle) {
+    public boolean droitDeplacement(Pion pion, Coordonner destination, Coordonner positionActuelle) {
         if (damier.getPion(destination) == null && damier.getPion(positionActuelle) != null) {
-            if (p.getCouleur() == Pion.Couleur.Noir) {
+            if (pion.getCouleur() == Pion.Couleur.Noir) {
 
                 if (!(damier.getPion(positionActuelle) instanceof Dame)) {
-                    if(positionActuelle.getX() + 1 == destination.getX() && positionActuelle.getY() - 1 == destination.getY() || positionActuelle.getX() + 1 == destination.getX() && positionActuelle.getY() + 1 == destination.getY()){
-                        return true;
-                    }
+                    boolean diagGauche = positionActuelle.getX() + 1 == destination.getX() && positionActuelle.getY() - 1 == destination.getY();
+                    boolean diagDroite = positionActuelle.getX() + 1 == destination.getX() && positionActuelle.getY() + 1 == destination.getY();
+                    return diagGauche || diagDroite;
                 } else {
-                    int xDeDiagonal = destination.getX() - positionActuelle.getX();
-                    int yDeDiagonal = destination.getY() - positionActuelle.getY();
-                    int dirX = Integer.signum(xDeDiagonal);
-                    int dirY = Integer.signum(yDeDiagonal);
-                    if (xDeDiagonal == yDeDiagonal) {
-                        for (int i = positionActuelle.getX(); i < destination.getX(); i += dirX) {
-                            for (int j = positionActuelle.getY(); j < destination.getY(); j += dirY) {
-                                Coordonner coordonner = new Coordonner(i, j);
-                                if (getDamier().getPion(coordonner).getCouleur() == p.getCouleur()) {
-                                    return false;
-                                }
-                                if (getDamier().getPion(coordonner) != null) {
-                                    return false;
-                                }
+                    int xd = destination.getX() - positionActuelle.getX();
+                    int yd = destination.getY() - positionActuelle.getY();
+                    int dirX = Integer.signum(xd);
+                    int dirY = Integer.signum(yd);
+
+                    if (Math.abs(xd) == Math.abs(yd)) {
+                        for (int i = positionActuelle.getX() + dirX, j = positionActuelle.getY() + dirY;
+                             i != destination.getX() && j != destination.getY();
+                             i += dirX, j += dirY) {
+                            Coordonner c = new Coordonner(i, j);
+                            Pion p = getDamier().getPion(c);
+                            if (p != null) {
+                                return false;
                             }
                         }
                         return true;
@@ -118,19 +103,19 @@ public class Partie {
     }
 
     /**
-     *Change la position du pion lors d'un deplacement.
+     * Change la position du pion lors d'un déplacement.
      *
-     * @param p pion a deplacer.
-     * @param destination destination du pion.
-     * @param   positionActuelle la postition actuelle du pion a deplacer.
-     * @return retourne un Boolean pour facilite la gestion d'erreur de la vue avec android studio.
+     * @param pion le pion à déplacer
+     * @param destination la destination du pion
+     * @param positionActuelle la position actuelle du pion
+     * @return true si le déplacement est réussi, false sinon
      */
-    public boolean actionDeplacement(Pion p, Coordonner destination, Coordonner positionActuelle) {
-        if (DroitDeplacement(p, destination, positionActuelle)) {
+    public boolean actionDeplacement(Pion pion, Coordonner destination, Coordonner positionActuelle) {
+        if (droitDeplacement(pion, destination, positionActuelle)) {
             damier.retirerPion(positionActuelle);
 
-            if (!checkPromotion(p, destination, positionActuelle)) {
-                damier.ajouterPion(destination, p);
+            if (!checkPromotion(pion, destination, positionActuelle)) {
+                damier.ajouterPion(destination, pion);
             }
 
             if (checkFinPartie()) {
@@ -144,60 +129,79 @@ public class Partie {
     }
 
     /**
-     * Decide si oui ou non la capture peut arriver.
-     * @param p le pions qui attaque.
-     * @param destination la destinations final de l'attaqueur.
-     * @param positionActuelle la position du pion qui attaque.
-     * @return si oui ou non la capture peut arriver.
+     * Détermine si une capture est possible pour un pion donné.
+     *
+     * @param pion le pion qui attaque
+     * @param destination la destination finale du pion
+     * @param positionActuelle la position actuelle du pion
      */
-    public void DroitDeCapture(Pion p, Coordonner destination, Coordonner positionActuelle) {
+    public void droitDeCapture(Pion pion, Coordonner destination, Coordonner positionActuelle) {
 
-        Coordonner pionACapturer = new Coordonner(destination.getX() - positionActuelle.getY(), destination.getY() - positionActuelle.getX());
+        Coordonner pionCapturer = new Coordonner(
+                destination.getX() - positionActuelle.getY(),
+                destination.getY() - positionActuelle.getX());
 
         if (damier.getPion(destination) == null && damier.getPion(positionActuelle) != null) {
-            if (damier.getPion(pionACapturer) != null && !(damier.getPion(pionACapturer) instanceof Dame)) {
-                if (p.getCouleur() != damier.getPion(pionACapturer).getCouleur()) {
-                    ActionDeCapture (p,  positionActuelle, destination, pionACapturer);
+            if (damier.getPion(pionCapturer) != null && !(damier.getPion(pionCapturer) instanceof Dame)) {
+                if (pion.getCouleur() != damier.getPion(pionCapturer).getCouleur()) {
+                    actionDeCapture(pion, positionActuelle, destination, pionCapturer);
                 }
             } else {
-                int xDeDiagonal = destination.getX() - positionActuelle.getX();
-                int yDeDiagonal = destination.getY() - positionActuelle.getY();
-                int dirX = Integer.signum(xDeDiagonal);
-                int dirY = Integer.signum(yDeDiagonal);
-                if (xDeDiagonal == yDeDiagonal) {
-                    int conteur = 0;
+                int xd = destination.getX() - positionActuelle.getX();
+                int yd = destination.getY() - positionActuelle.getY();
+                int dirX = Integer.signum(xd);
+                int dirY = Integer.signum(yd);
+                if (Math.abs(xd) == Math.abs(yd)) {
+                    int compteur = 0;
                     boolean pionAvant = false;
                     for (int i = positionActuelle.getX(); i < destination.getX(); i += dirX) {
                         for (int j = positionActuelle.getY(); j < destination.getY(); j += dirY) {
-                            Coordonner coordonner = new Coordonner(i, j);
-                            if (getDamier().getPion(coordonner).getCouleur() == p.getCouleur()) {
+                            Coordonner c = new Coordonner(i, j);
+                            Pion p = getDamier().getPion(c);
+                            if (p != null && p.getCouleur() == pion.getCouleur()) {
                                 break;
                             }
-                            if (getDamier().getPion(coordonner) == null && pionAvant) {
+                            if (p == null && pionAvant) {
                                 pionAvant = false;
-                            } else if (getDamier().getPion(coordonner) != null) {
-                                if (pionAvant) {
+                            } else if (p != null) {
+                                if (pionAvant || compteur == 1) {
                                     break;
                                 }
-                                pionACapturer.setCoordonner(new Coordonner(i, j));
+                                pionCapturer.setCoordonner(new Coordonner(i, j));
                                 pionAvant = true;
-                                conteur++;
+                                compteur++;
                             }
                         }
                     }
-                    ActionDeCapture (p,  positionActuelle,  destination,  pionACapturer);
+                    actionDeCapture(pion, positionActuelle, destination, pionCapturer);
                 }
             }
         }
     }
 
-    public boolean ActionDeCapture (Pion p, Coordonner positionActuelle, Coordonner destination, Coordonner pionACapturer){
-        damier.ajouterPion(destination, p);
-        damier.retirerPion(pionACapturer);
+    /**
+     * Exécute la capture d'un pion adverse.
+     *
+     * @param pion le pion attaquant
+     * @param positionActuelle la position actuelle du pion
+     * @param destination la destination finale du pion
+     * @param pionCapturer la position du pion capturé
+     */
+    public void actionDeCapture(
+            Pion pion, Coordonner positionActuelle, Coordonner destination, Coordonner pionCapturer) {
+        damier.ajouterPion(destination, pion);
+        damier.retirerPion(pionCapturer);
         damier.retirerPion(positionActuelle);
-        return false;
     }
 
+    /**
+     * Vérifie si un pion doit être promu en dame.
+     *
+     * @param pion le pion à vérifier
+     * @param destination la destination du pion
+     * @param positionActuelle la position actuelle du pion
+     * @return true si promotion effectuée, sinon false
+     */
     public boolean checkPromotion(Pion pion, Coordonner destination, Coordonner positionActuelle) {
         if (pion.getCouleur() == Pion.Couleur.Blanc && destination.getX() == 0) {
             damier.ajouterPion(destination, new Dame(Pion.Couleur.Blanc));
@@ -205,29 +209,24 @@ public class Partie {
         } else if (pion.getCouleur() == Pion.Couleur.Noir && destination.getX() == 9) {
             damier.ajouterPion(destination, new Dame(Pion.Couleur.Noir));
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
-    public Boolean checkFinPartie() {
+    /**
+     * Vérifie si la partie est terminée (plus de pions ou tous bloqués).
+     *
+     * @return true si la partie est finie, false sinon
+     */
+    public boolean checkFinPartie() {
         int pionsNoir = damier.getNbPionsNoir();
         int pionsBlanc = damier.getNbPionsBlanc();
 
         int immobilesNoir = damier.getNbImmobilesNoir();
         int immobilesBlanc = damier.getNbImmobilesBlanc();
 
-        if (pionsNoir == 0 || pionsNoir == immobilesNoir) {
-            System.console().printf("Victoire Joueur Blanc");
-            return true;
-        } else if (pionsBlanc == 0 || pionsBlanc == immobilesBlanc) {
-            
-            return true;
-        } else {
-
-            return false;
-        }
+        return (pionsNoir == 0 || pionsNoir == immobilesNoir)
+                || (pionsBlanc == 0 || pionsBlanc == immobilesBlanc);
     }
-
 }
 
