@@ -36,7 +36,7 @@ public class Coordonner {
      * @param coordonner la nouvelle coordonnee
      */
     public void setCoordonner(Coordonner coordonner) {
-        this.coordonner = new Coordonner(coordonner.getX(), coordonner.getY());
+        this.coordonner = coordonner;
     }
 
     /**

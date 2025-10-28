@@ -117,7 +117,7 @@ public class Partie {
         if (droitDeplacement(pion, destination, positionActuelle)) {
             damier.retirerPion(positionActuelle);
 
-            if (!checkPromotion(pion, destination, positionActuelle)) {
+            if (!checkPromotion(pion, destination)) {
                 damier.ajouterPion(destination, pion);
             }
 
@@ -139,10 +139,10 @@ public class Partie {
      * @param positionActuelle la position actuelle du pion
      */
     public void droitDeCapture(Pion pion, Coordonner destination, Coordonner positionActuelle) {
-
         Coordonner pionCapturer = new Coordonner(
                 destination.getX() - positionActuelle.getY(),
-                destination.getY() - positionActuelle.getX());
+                destination.getY() - positionActuelle.getX()
+        );
 
         if (damier.getPion(destination) == null && damier.getPion(positionActuelle) != null) {
             if (damier.getPion(pionCapturer) != null && !(damier.getPion(pionCapturer) instanceof Dame)) {
@@ -154,22 +154,24 @@ public class Partie {
                 int yd = destination.getY() - positionActuelle.getY();
                 int dirX = Integer.signum(xd);
                 int dirY = Integer.signum(yd);
-                if (Math.abs(xd) == Math.abs(yd)) {
+
+                if (xd == yd) {
                     int compteur = 0;
                     boolean pionAvant = false;
                     for (int i = positionActuelle.getX(); i < destination.getX(); i += dirX) {
                         for (int j = positionActuelle.getY(); j < destination.getY(); j += dirY) {
-                            Coordonner c = new Coordonner(i, j);
-                            Pion p = getDamier().getPion(c);
-                            if (p != null && p.getCouleur() == pion.getCouleur()) {
+                            Coordonner coordonner = new Coordonner(i, j);
+
+                            if (getDamier().getPion(coordonner).getCouleur() == pion.getCouleur()) {
                                 break;
                             }
-                            if (p == null && pionAvant) {
+                            if (getDamier().getPion(coordonner) == null && pionAvant) {
                                 pionAvant = false;
-                            } else if (p != null) {
+                            } else if (getDamier().getPion(coordonner) != null) {
                                 if (pionAvant || compteur == 1) {
                                     break;
                                 }
+
                                 pionCapturer.setCoordonner(new Coordonner(i, j));
                                 pionAvant = true;
                                 compteur++;
@@ -202,10 +204,9 @@ public class Partie {
      *
      * @param pion le pion à vérifier
      * @param destination la destination du pion
-     * @param positionActuelle la position actuelle du pion
      * @return true si promotion effectuée, sinon false
      */
-    public boolean checkPromotion(Pion pion, Coordonner destination, Coordonner positionActuelle) {
+    public boolean checkPromotion(Pion pion, Coordonner destination) {
         if (pion.getCouleur() == Pion.Couleur.Blanc && destination.getX() == 0) {
             damier.ajouterPion(destination, new Dame(Pion.Couleur.Blanc));
             return true;
@@ -225,23 +226,25 @@ public class Partie {
         int pionsNoir = damier.getNbPionsNoir();
         int pionsBlanc = damier.getNbPionsBlanc();
 
-        if (CheckBouger(Pion.Couleur.Noir) || pionsNoir == 0) {
-            System.console().printf("Victoire Joueur Blanc");
-            return true;
-        } else if (CheckBouger(Pion.Couleur.Blanc)|| pionsBlanc == 0) {
-            return true;
-        } else {
+        boolean victoireNoir = (checkBouger(Pion.Couleur.Blanc) || pionsBlanc == 0);
+        boolean victoireBlanc = (checkBouger(Pion.Couleur.Noir) || pionsNoir == 0);
 
-            return false;
-        }
+        return victoireNoir && victoireBlanc;
     }
-    public boolean CheckBouger(Pion.Couleur couleur) {
+
+    /**
+     * Vérifie si au moins un pion d'une couleur peut bouger.
+     *
+     * @param couleur couleur des pions à vérifier
+     * @return true si au moins un pion peut bouger, false sinon
+     */
+    public boolean checkBouger(Pion.Couleur couleur) {
         for (Map.Entry<Coordonner, Pion> entry : damier.getCases().entrySet()) {
             if (entry.getValue() != null && entry.getValue().getCouleur() == couleur) {
-                for(int i = 0; i < 10; i++){
-                    for(int j = 0; j < 10; j++){
-                        if((i + j % 2) == 1){
-                            if (Integer.signum(j - entry.getKey().getY()) == 1){
+                for (int i = 0; i < 10; i++) {
+                    for (int j = 0; j < 10; j++) {
+                        if (((i + j) % 2) == 1) {
+                            if (Integer.signum(j - entry.getKey().getY()) == 1) {
                                 return true;
                             }
                         }
