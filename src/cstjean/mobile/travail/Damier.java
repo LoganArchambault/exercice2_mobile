@@ -18,6 +18,10 @@ public class Damier {
 
     /**
      * Initialise le damier avec 20 pions noirs et 20 pions blancs.
+     *
+     * <p>
+     *     x = colonnes et y = ligne
+     * <p/>
      */
     public void initialiser() {
         cases.clear();

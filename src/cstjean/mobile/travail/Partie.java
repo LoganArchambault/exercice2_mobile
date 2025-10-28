@@ -134,8 +134,17 @@ public class Partie {
      */
     public Boolean actionDeplacement(Pion p, Coordonner destination, Coordonner positionActuelle) {
         if (DroitDeplacement(p, destination, positionActuelle)) {
-            damier.getCases().put(destination, damier.getPion(positionActuelle));
-            damier.getCases().put(positionActuelle, null);
+            damier.retirerPion(positionActuelle);
+
+            if(!checkPromotion(p, destination, positionActuelle)) {
+                damier.ajouterPion(destination, p);
+            }
+
+            if (checkFinPartie()) {
+                initPartie();
+            }
+
+            changerJoueur();
             return true;
         }
         return false;
@@ -161,11 +170,23 @@ public class Partie {
     public Boolean ActionDeCapture(Pion p, Coordonner positionActuelle, Coordonner destination) {
         Coordonner milieu = new Coordonner(destination.getX() - positionActuelle.getY(),destination.getY() - positionActuelle.getX());
         if(DroitDeCapture(p, destination, positionActuelle)){
-            damier.getCases().put(destination, damier.getPion(positionActuelle));
-            damier.getCases().put(positionActuelle, null);
-            damier.getCases().put(milieu, null);
+            damier.ajouterPion(destination, p);
+            damier.retirerPion(positionActuelle);
+            damier.retirerPion(milieu);
         }
         return false;
+    }
+
+    public boolean checkPromotion(Pion pion, Coordonner destination, Coordonner positionActuelle) {
+        if (pion.getCouleur() == Pion.Couleur.Blanc && destination.getX() == 0) {
+            damier.ajouterPion(destination, new Dame(Pion.Couleur.Blanc));
+            return true;
+        } else if (pion.getCouleur() == Pion.Couleur.Noir && destination.getX() == 9) {
+            damier.ajouterPion(destination, new Dame(Pion.Couleur.Noir));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Boolean checkFinPartie() {
@@ -179,10 +200,10 @@ public class Partie {
             System.console().printf("Victoire Joueur Blanc");
             return true;
         } else if (pionsBlanc == 0 || pionsBlanc == immobilesBlanc) {
-            System.console().printf("Victoire Joueur Noir");
+            
             return true;
         } else {
-            System.console().printf("Next turn");
+
             return false;
         }
     }

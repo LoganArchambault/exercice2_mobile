@@ -19,7 +19,7 @@ public class Vue {
         for (int ligne = 0; ligne < 10; ligne++) {
             for (int col = 0; col < 10; col++) {
                 if ((ligne + col) % 2 == 1) { // case jouable
-                    Pion pion = damier.getPion(new int[]{ligne, col});
+                    Pion pion = damier.getPion(new Coordonner(ligne, col));
                     sb.append(pion == null ? "-" : pion.getRepresentation());
                 } else {
                     sb.append("-");
@@ -38,5 +38,20 @@ public class Vue {
      */
     public void afficherConsole(Damier damier) {
         System.out.print(genererAffichage(damier));
+    }
+
+    /**
+     * Affiche le joueur gagnant d'apres leur couleur.
+     *
+     * @param couleur du joueur gagnant
+     */
+    public void afficherGagnant(Pion.Couleur couleur) {
+        if (couleur == Pion.Couleur.Noir) {
+            System.console().printf("Victoire Joueur Noir");
+        }
+
+        if (couleur == Pion.Couleur.Blanc) {
+            System.console().printf("Victoire Joueur Blanc");
+        }
     }
 }
