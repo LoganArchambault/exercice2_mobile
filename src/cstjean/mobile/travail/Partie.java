@@ -75,8 +75,9 @@ public class Partie {
             if (pion.getCouleur() == Pion.Couleur.Noir) {
 
                 if (!(damier.getPion(positionActuelle) instanceof Dame)) {
-                    boolean diagGauche = positionActuelle.getX() + 1 == destination.getX() && positionActuelle.getY() - 1 == destination.getY();
-                    boolean diagDroite = positionActuelle.getX() + 1 == destination.getX() && positionActuelle.getY() + 1 == destination.getY();
+                    boolean memeLigne = positionActuelle.getX() + 1 == destination.getX();
+                    boolean diagGauche = memeLigne && positionActuelle.getY() - 1 == destination.getY();
+                    boolean diagDroite = memeLigne && positionActuelle.getY() + 1 == destination.getY();
                     return diagGauche || diagDroite;
                 } else {
                     int xd = destination.getX() - positionActuelle.getX();
