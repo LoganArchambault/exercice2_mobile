@@ -25,12 +25,12 @@ public class Partie {
     public Partie() {
         joueurBlanc = new Joueur("Joueur 1", Pion.Couleur.Blanc);
         joueurNoir = new Joueur("Joueur 2", Pion.Couleur.Noir);
+        damier = new Damier();
         initPartie();
     }
 
     public void initPartie() {
         joueurActuel = joueurBlanc;
-        damier = new Damier();
         damier.initialiser();
     }
 
@@ -84,42 +84,35 @@ public class Partie {
      * @param positionActuelle postion du pion.
      * @return si oui ou non il peut etre deplacer.
      */
-    public Boolean DroitDeplacement(Pion p, Coordonner destination, Coordonner positionActuelle) {
-        if (damier.getPion(destination) == null &&  damier.getPion(positionActuelle) != null) {
-                if (p.getCouleur() == Pion.Couleur.Noir) {
+    public boolean DroitDeplacement(Pion p, Coordonner destination, Coordonner positionActuelle) {
+        if (damier.getPion(destination) == null && damier.getPion(positionActuelle) != null) {
+            if (p.getCouleur() == Pion.Couleur.Noir) {
 
-                    if (!(damier.getPion(positionActuelle) instanceof Dame)) {
-                        return positionActuelle.getX() + 1 == destination.getX() && positionActuelle.getY() - 1 == destination.getY() || positionActuelle.getX() + 1 == destination.getX() && positionActuelle.getY() + 1 == destination.getY();
+                if (!(damier.getPion(positionActuelle) instanceof Dame)) {
+                    if(positionActuelle.getX() + 1 == destination.getX() && positionActuelle.getY() - 1 == destination.getY() || positionActuelle.getX() + 1 == destination.getX() && positionActuelle.getY() + 1 == destination.getY()){
+                        return true;
                     }
-                    else{
-                        int XonSenvaOu = destination.getX() - positionActuelle.getX();
-                        int YonSenvaOu = destination.getY() -  positionActuelle.getY();
-
-                        if(XonSenvaOu >= 0 && YonSenvaOu >= 0){
-                            for (int i = 0; i < XonSenvaOu; i++) {
-                                for (int j = 0; j < YonSenvaOu; j++) {
-
+                } else {
+                    int xDeDiagonal = destination.getX() - positionActuelle.getX();
+                    int yDeDiagonal = destination.getY() - positionActuelle.getY();
+                    int dirX = Integer.signum(xDeDiagonal);
+                    int dirY = Integer.signum(yDeDiagonal);
+                    if (xDeDiagonal == yDeDiagonal) {
+                        for (int i = positionActuelle.getX(); i < destination.getX(); i += dirX) {
+                            for (int j = positionActuelle.getY(); j < destination.getY(); j += dirY) {
+                                Coordonner coordonner = new Coordonner(i, j);
+                                if (getDamier().getPion(coordonner).getCouleur() == p.getCouleur()) {
+                                    return false;
+                                }
+                                if (getDamier().getPion(coordonner) != null) {
+                                    return false;
                                 }
                             }
                         }
-
-                        if(Pion.Couleur.Blanc == p.getCouleur()) {
-                            for (int i = positionActuelle.getX(); i < 10; i++) {
-                                for (int j = positionActuelle.getY(); j < 10; j++) {
-                                    if () {
-                                    }
-                                }
-                            }
-                            for(){
-
-                            }
-                        }
-                    }
-                } else if (p.getCouleur() == Pion.Couleur.Blanc) {
-                    if (!(damier.getPion(positionActuelle) instanceof Dame)) {
-                        return positionActuelle.getX() - 1 == destination.getX() && positionActuelle.getY() - 1 == destination.getY() || positionActuelle.getX() + 1 == destination.getX() && positionActuelle.getY() - 1 == destination.getY();
+                        return true;
                     }
                 }
+            }
         }
         return false;
     }
@@ -132,11 +125,11 @@ public class Partie {
      * @param   positionActuelle la postition actuelle du pion a deplacer.
      * @return retourne un Boolean pour facilite la gestion d'erreur de la vue avec android studio.
      */
-    public Boolean actionDeplacement(Pion p, Coordonner destination, Coordonner positionActuelle) {
+    public boolean actionDeplacement(Pion p, Coordonner destination, Coordonner positionActuelle) {
         if (DroitDeplacement(p, destination, positionActuelle)) {
             damier.retirerPion(positionActuelle);
 
-            if(!checkPromotion(p, destination, positionActuelle)) {
+            if (!checkPromotion(p, destination, positionActuelle)) {
                 damier.ajouterPion(destination, p);
             }
 
@@ -157,23 +150,51 @@ public class Partie {
      * @param positionActuelle la position du pion qui attaque.
      * @return si oui ou non la capture peut arriver.
      */
-    public Boolean DroitDeCapture(Pion p, Coordonner destination, Coordonner positionActuelle) {
+    public void DroitDeCapture(Pion p, Coordonner destination, Coordonner positionActuelle) {
 
-        Coordonner milieu = new Coordonner(destination.getX() - positionActuelle.getY(),destination.getY() - positionActuelle.getX());
+        Coordonner pionACapturer = new Coordonner(destination.getX() - positionActuelle.getY(), destination.getY() - positionActuelle.getX());
 
-        if (damier.getPion(destination) == null && damier.getPion(positionActuelle) != null && damier.getPion(milieu) != null) {
-            return p.getCouleur() != damier.getPion(milieu).getCouleur();
+        if (damier.getPion(destination) == null && damier.getPion(positionActuelle) != null) {
+            if (damier.getPion(pionACapturer) != null && !(damier.getPion(pionACapturer) instanceof Dame)) {
+                if (p.getCouleur() != damier.getPion(pionACapturer).getCouleur()) {
+                    ActionDeCapture (p,  positionActuelle, destination, pionACapturer);
+                }
+            } else {
+                int xDeDiagonal = destination.getX() - positionActuelle.getX();
+                int yDeDiagonal = destination.getY() - positionActuelle.getY();
+                int dirX = Integer.signum(xDeDiagonal);
+                int dirY = Integer.signum(yDeDiagonal);
+                if (xDeDiagonal == yDeDiagonal) {
+                    int conteur = 0;
+                    boolean pionAvant = false;
+                    for (int i = positionActuelle.getX(); i < destination.getX(); i += dirX) {
+                        for (int j = positionActuelle.getY(); j < destination.getY(); j += dirY) {
+                            Coordonner coordonner = new Coordonner(i, j);
+                            if (getDamier().getPion(coordonner).getCouleur() == p.getCouleur()) {
+                                break;
+                            }
+                            if (getDamier().getPion(coordonner) == null && pionAvant) {
+                                pionAvant = false;
+                            } else if (getDamier().getPion(coordonner) != null) {
+                                if (pionAvant) {
+                                    break;
+                                }
+                                pionACapturer.setCoordonner(new Coordonner(i, j));
+                                pionAvant = true;
+                                conteur++;
+                            }
+                        }
+                    }
+                    ActionDeCapture (p,  positionActuelle,  destination,  pionACapturer);
+                }
+            }
         }
-        return false;
     }
 
-    public Boolean ActionDeCapture(Pion p, Coordonner positionActuelle, Coordonner destination) {
-        Coordonner milieu = new Coordonner(destination.getX() - positionActuelle.getY(),destination.getY() - positionActuelle.getX());
-        if(DroitDeCapture(p, destination, positionActuelle)){
-            damier.ajouterPion(destination, p);
-            damier.retirerPion(positionActuelle);
-            damier.retirerPion(milieu);
-        }
+    public boolean ActionDeCapture (Pion p, Coordonner positionActuelle, Coordonner destination, Coordonner pionACapturer){
+        damier.ajouterPion(destination, p);
+        damier.retirerPion(pionACapturer);
+        damier.retirerPion(positionActuelle);
         return false;
     }
 
@@ -208,13 +229,5 @@ public class Partie {
         }
     }
 
-    /**
-     * Réinitialise la partie.
-     * Réinitialise le damier et recommence avec le joueur noir.
-     */
-    public void reset() {
-        damier.initialiser();
-        joueurActuel = joueurBlanc;
-    }
 }
 
