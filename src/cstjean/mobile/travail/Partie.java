@@ -1,5 +1,7 @@
 package cstjean.mobile.travail;
 
+import java.util.Map;
+
 /**
  * Classe représentant une partie de jeu de dames internationales.
  * Gère les joueurs, le damier et la logique de tour.
@@ -219,15 +221,35 @@ public class Partie {
      *
      * @return true si la partie est finie, false sinon
      */
-    public boolean checkFinPartie() {
+    public Boolean checkFinPartie() {
         int pionsNoir = damier.getNbPionsNoir();
         int pionsBlanc = damier.getNbPionsBlanc();
 
-        int immobilesNoir = damier.getNbImmobilesNoir();
-        int immobilesBlanc = damier.getNbImmobilesBlanc();
+        if (CheckBouger(Pion.Couleur.Noir) || pionsNoir == 0) {
+            System.console().printf("Victoire Joueur Blanc");
+            return true;
+        } else if (CheckBouger(Pion.Couleur.Blanc)|| pionsBlanc == 0) {
+            return true;
+        } else {
 
-        return (pionsNoir == 0 || pionsNoir == immobilesNoir)
-                || (pionsBlanc == 0 || pionsBlanc == immobilesBlanc);
+            return false;
+        }
+    }
+    public boolean CheckBouger(Pion.Couleur couleur) {
+        for (Map.Entry<Coordonner, Pion> entry : damier.getCases().entrySet()) {
+            if (entry.getValue() != null && entry.getValue().getCouleur() == couleur) {
+                for(int i = 0; i < 10; i++){
+                    for(int j = 0; j < 10; j++){
+                        if((i + j % 2) == 1){
+                            if (Integer.signum(j - entry.getKey().getY()) == 1){
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
 
